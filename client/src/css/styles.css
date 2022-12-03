@@ -1,0 +1,62 @@
+* {
+	margin: 0;
+	box-sizing: border-box;
+	font-family: "Montserrat", sans-serif;
+}
+
+:root {
+	--primaryColor: #282828;
+	--primartyTitle: #ffffff;
+	--bgPrimary: #121212;
+	--bgCard: #2e2f2e;
+}
+
+body {
+	background-color: var(--bgPrimary);
+	color: var(--primartyTitle);
+}
+
+h1 {
+	font-weight: 700;
+}
+
+h2 {
+	font-weight: 500;
+}
+
+h3 {
+	font-weight: 300;
+}
+
+h4 {
+	font-weight: 200;
+}
+
+.allTracks {
+	background-color: #0a96ae;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.trackCardContainer {
+	background-color: var(--bgCard);
+	width: 1000px;
+	height: 300px;
+	border-radius: 10px;
+	margin-bottom: 2%;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.trackCover {
+	background-color: #d9d9d9;
+	width: 235px;
+	height: 235px;
+	border-radius: 10px;
+}
+
+.trackInfo {
+}
