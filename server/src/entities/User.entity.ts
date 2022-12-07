@@ -1,4 +1,5 @@
-import { Column, PrimaryGeneratedColumn, Entity, BaseEntity } from "typeorm";
+import { Column, PrimaryGeneratedColumn, Entity, BaseEntity, OneToMany } from "typeorm";
+import { Playlists_Users } from "./Playlist_Users.entity";
 
 export enum UserType {
 	ADMIN = "Admin",
@@ -28,4 +29,7 @@ export class User extends BaseEntity {
 
 	@Column({ type: "enum", enum: UserType, default: UserType.USER })
 	userType: UserType;
+
+	@OneToMany(() => Playlists_Users, (playlistUser) => playlistUser.user)
+	playlistUser: Playlists_Users[];
 }

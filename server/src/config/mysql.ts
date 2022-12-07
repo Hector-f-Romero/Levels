@@ -1,8 +1,9 @@
 import { DataSource } from "typeorm";
-import { User } from "../entities/User";
-import { Album } from "../entities/Album";
-import { Genre } from "../entities/Genre";
-import { Playlist } from "../entities/Playlist";
+import { User } from "../entities/User.entity";
+import { Album } from "../entities/Album.entity";
+import { Genre } from "../entities/Genre.entity";
+import { Playlist } from "../entities/Playlist.entity";
+import { Playlists_Users } from "../entities/Playlist_Users.entity";
 
 const AppDataSource = new DataSource({
 	type: "mysql",
@@ -12,7 +13,7 @@ const AppDataSource = new DataSource({
 	password: <string>process.env.PASSWORD_DB,
 	database: <string>process.env.DB,
 	logging: true,
-	entities: [User, Album, Genre, Playlist],
+	entities: [User, Album, Genre, Playlist, Playlists_Users],
 });
 
 const connectDB = async () => {

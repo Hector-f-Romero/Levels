@@ -1,4 +1,4 @@
-import { Column, PrimaryGeneratedColumn, Entity, BaseEntity, CreateDateColumn } from "typeorm";
+import { Column, PrimaryGeneratedColumn, Entity, BaseEntity, CreateDateColumn, ManyToOne } from "typeorm";
 
 @Entity("tracks")
 export class Track extends BaseEntity {
@@ -11,8 +11,9 @@ export class Track extends BaseEntity {
 	@Column("int")
 	duration: number;
 
-	@Column("int")
-	idGenre: number;
+	// @ManyToOne(()=>)
+	// @Column("int")
+	// idGenre: number;
 
 	@Column("int")
 	idAlbum: number;
