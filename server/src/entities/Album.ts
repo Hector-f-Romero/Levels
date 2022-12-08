@@ -1,4 +1,5 @@
-import { Column, PrimaryGeneratedColumn, Entity, BaseEntity } from "typeorm";
+import { Column, PrimaryGeneratedColumn, Entity, BaseEntity, OneToMany } from "typeorm";
+import { Track } from "./Track";
 
 @Entity("albums")
 export class Album extends BaseEntity {
@@ -16,4 +17,7 @@ export class Album extends BaseEntity {
 
 	@Column("varchar", { length: 25, nullable: true })
 	coverAlbum: string;
+
+	@OneToMany(() => Track, (track) => track.idAlbum)
+	tracks: Track[];
 }

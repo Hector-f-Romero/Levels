@@ -1,8 +1,12 @@
 import { DataSource } from "typeorm";
+import "dotenv/config";
+
 import { User } from "../entities/User";
 import { Album } from "../entities/Album";
 import { Genre } from "../entities/Genre";
 import { Playlist } from "../entities/Playlist";
+import { Track } from "../entities/Track";
+import { Artist } from "../entities/Artist";
 
 const AppDataSource = new DataSource({
 	type: "mysql",
@@ -11,8 +15,11 @@ const AppDataSource = new DataSource({
 	username: <string>process.env.USER_DB,
 	password: <string>process.env.PASSWORD_DB,
 	database: <string>process.env.DB,
+	synchronize: true,
 	logging: true,
-	entities: [User, Album, Genre, Playlist],
+	entities: [User, Album, Genre, Playlist, Track, Artist],
+	migrations: [__dirname + "/migrations/*{.ts,.js}"],
+	migrationsRun: true,
 });
 
 const connectDB = async () => {
@@ -24,4 +31,4 @@ const connectDB = async () => {
 	}
 };
 
-export { connectDB };
+export { connectDB, AppDataSource };

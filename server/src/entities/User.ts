@@ -1,4 +1,5 @@
-import { Column, PrimaryGeneratedColumn, Entity, BaseEntity } from "typeorm";
+import { Column, PrimaryGeneratedColumn, Entity, BaseEntity, ManyToMany } from "typeorm";
+import { Playlist } from "./Playlist";
 
 export enum UserType {
 	ADMIN = "Admin",
@@ -28,4 +29,7 @@ export class User extends BaseEntity {
 
 	@Column({ type: "enum", enum: UserType, default: UserType.USER })
 	userType: UserType;
+
+	@ManyToMany(() => Playlist, (playlist) => playlist.users)
+	playlists: Playlist[];
 }
