@@ -4,7 +4,6 @@ import { User } from "../entities/User";
 const createUser = async (req: Request, res: Response) => {
 	try {
 		const { names, lastNames, userName, email, password, userType } = req.body;
-		console.log(req.body);
 
 		const user = new User();
 		user.names = names;

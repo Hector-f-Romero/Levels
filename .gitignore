@@ -29,3 +29,4 @@ yarn-error.log*
 # Server
 /server/node_modules
 /server/.env
+/sever/src/migrations/

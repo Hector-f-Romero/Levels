@@ -5,7 +5,7 @@ import "../css/styles.css";
 const Home = () => {
 	return (
 		<div>
-			<h1>Hola</h1>
+			<h2>Page home</h2>
 			<div className="allTracks">
 				<TrackCard />
 				<TrackCard />

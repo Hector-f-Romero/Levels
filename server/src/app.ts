@@ -8,7 +8,7 @@ import usersRoutes from "./routes/users.routes";
 import { connectDB } from "./config/mysql";
 
 const app = express();
-const PORT = process.env.PORT || 4001;
+const PORT = process.env.BE_PORT || 4001;
 
 app.use(cors());
 app.use(express.json());
