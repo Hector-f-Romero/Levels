@@ -8,21 +8,22 @@ const validateType = (value: string) => {
 	return true;
 };
 
-const userNameExist = async (userName: string) => {
-	const userNameExist = await User.find({ where: { userName } });
+const userNameExist = async (userName: string): Promise<boolean> => {
+	const userNameExist = await User.findOne({ where: { userName } });
 
-	if (!(userNameExist.length === 0)) {
-		throw new Error("UserName already exists.");
+	if (userNameExist) {
+		throw new Error(`UserName ${userName} already exists in BD.`);
 	}
 	return true;
 };
 
 const emailExist = async (email: string): Promise<boolean> => {
-	const emailExist = await User.find({ where: [{ email }] });
+	const emailExist = await User.findOne({ where: [{ email }] });
 
-	if (!(emailExist.length === 0)) {
-		throw new Error("Email already exists.");
+	if (emailExist) {
+		throw new Error(`Email ${email} already exists in BD.`);
 	}
+
 	return true;
 };
 

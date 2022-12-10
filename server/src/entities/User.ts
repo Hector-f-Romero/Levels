@@ -1,4 +1,5 @@
-import { Column, PrimaryGeneratedColumn, Entity, BaseEntity, ManyToMany } from "typeorm";
+import { Column, Entity, BaseEntity, ManyToMany, PrimaryColumn } from "typeorm";
+
 import { Playlist } from "./Playlist";
 
 export enum UserType {
@@ -8,9 +9,8 @@ export enum UserType {
 
 @Entity("users")
 export class User extends BaseEntity {
-	@PrimaryGeneratedColumn()
-	// @PrimaryGeneratedColumn("uuid")
-	idUser: number;
+	@PrimaryColumn()
+	idUser: string;
 
 	@Column("varchar", { length: 25 })
 	names: string;
