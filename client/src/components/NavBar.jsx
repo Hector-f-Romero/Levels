@@ -7,6 +7,7 @@ const NavBar = () => {
 		<header>
 			<h1>Levels</h1>
 			<NavLink to="/">Inicio</NavLink>
+			<NavLink to="/login">LogIn</NavLink>
 		</header>
 	);
 };

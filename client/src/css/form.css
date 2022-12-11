@@ -1,0 +1,17 @@
+* {
+	margin: 0;
+	box-sizing: border-box;
+	font-family: "Montserrat", sans-serif;
+}
+
+.form-input {
+	margin: 15px 0px;
+}
+
+.form-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	background-color: rgb(212, 131, 131);
+}
