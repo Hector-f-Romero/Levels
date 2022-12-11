@@ -16,6 +16,6 @@ app.use(express.json());
 connectDB();
 
 app.use("/api", tracksRoutes);
-app.use("/api", usersRoutes);
+app.use("/api/user", usersRoutes);
 
 app.listen(PORT, () => console.log(`API REST en funcionamiento en el puerto ${PORT} 🔥`));

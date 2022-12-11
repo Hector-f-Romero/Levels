@@ -3,17 +3,18 @@ import { nanoid } from "nanoid";
 
 import { User } from "../entities/User";
 import { handleHttp } from "../helpers/error.handle";
+import { AppDataSource } from "../config/mysql";
 
 const getUsers = async (req: Request, res: Response) => {
 	try {
 		const users = await User.find();
 		res.status(200).json(users);
 	} catch (error) {
-		handleHttp(res, "ERROR_GET_USERS (GET)");
+		handleHttp(res, error, "ERROR_GET_USERS (GET)");
 	}
 };
 
-const getUserById = async (req: Request, res: Response): Promise<void> => {
+const getUser = async (req: Request, res: Response) => {
 	try {
 		const user = await User.findOne({
 			where: [
@@ -22,14 +23,18 @@ const getUserById = async (req: Request, res: Response): Promise<void> => {
 				},
 			],
 		});
-		console.log(user);
-		res.status(200).json({ user });
+
+		if (!user) {
+			return res.status(404).json({ msg: `Don't exist users in BD with the id ${req.params.id}` });
+		}
+
+		return res.status(200).json({ user });
 	} catch (error) {
-		res.status(500).json(error);
+		return res.status(500).json(error);
 	}
 };
 
-const createUser = async (req: Request, res: Response): Promise<void> => {
+const createUser = async (req: Request, res: Response) => {
 	try {
 		const { names, lastNames, userName, email, password, userType } = req.body;
 
@@ -41,13 +46,39 @@ const createUser = async (req: Request, res: Response): Promise<void> => {
 		user.email = email;
 		user.password = password;
 		user.userType = userType;
-
 		user.save();
 
-		res.status(200).json({ msg: "Creación de usuario exitosa.", nombre: names });
+		return res.status(201).json({ msg: "Creación de usuario exitosa.", nombre: names });
 	} catch (error) {
-		handleHttp(res, "ERROR_CREATE_USER (POST)");
+		console.log("CATCH DE CREATE USER");
+		handleHttp(res, error, "ERROR_CREATE_USER (POST)");
 	}
 };
 
-export { getUsers, getUserById, createUser };
+const updateUser = async (req: Request, res: Response) => {
+	try {
+		const id = req.params.id;
+		const { names, lastNames, userName, email, password, userType } = req.body;
+		await AppDataSource.createQueryBuilder()
+			.update(User)
+			.set({ names, lastNames, userName, email, password, userType })
+			.where({ idUser: id })
+			.execute();
+		res.status(200).json({ msg: "User update correctly." });
+	} catch (error) {
+		handleHttp(res, error, "ERROR_UPDATE_USER (PATCH)");
+	}
+};
+
+const deleteUser = async (req: Request, res: Response) => {
+	try {
+		const id = req.params.id;
+		await AppDataSource.createQueryBuilder().delete().from(User).where({ idUser: id }).execute();
+
+		return res.status(201).json({ msg: `User with id ${id} deleted correctly.` });
+	} catch (error) {
+		handleHttp(res, error, "ERROR_DELETE_USER (DELETE)");
+	}
+};
+
+export { getUsers, getUser, createUser, updateUser, deleteUser };
