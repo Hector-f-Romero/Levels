@@ -1,5 +1,8 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { loginUserRequest } from "../api/user.api";
 import FormInput from "../components/FormInput";
 import "../css/form.css";
 
@@ -8,28 +11,53 @@ const LogIn = () => {
 		userName: "",
 		password: "",
 	});
+	const [errors, setErrors] = useState([]);
+	const [loading, setLoading] = useState(false);
+
+	const navigate = useNavigate();
 
 	const inputs = [
 		{
 			id: 1,
 			name: "userName",
-			type: "text",
-			placeholder: "UserName",
 			label: "User Name",
+			placeholder: "UserName",
+			type: "text",
+			minlenght: 3,
+			maxlenght: "15",
+			errorMessage: "UserName cannot be empty.",
+			required: true,
 		},
 		{
 			id: 2,
 			name: "password",
-			type: "password",
-			placeholder: "Password",
 			label: "Password",
+			placeholder: "Password",
+			type: "password",
+			minlenght: 3,
+			maxlenght: "15",
+			errorMessage: "Password cannot be empty.",
+			required: true,
 		},
 	];
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log("Enviando información");
-		console.log(values);
+		setLoading(true);
+		const res = await loginUserRequest(values);
+		setLoading(false);
+
+		if (res.status === 404) {
+			setErrors([]);
+			setErrors((errors) => [...errors, res.data]);
+		}
+
+		if (res.status === 200) {
+			console.log(values);
+			console.log(res);
+			console.log("Usuario existe en la BD");
+			navigate("/");
+		}
 	};
 
 	const onChange = (e) => {
@@ -44,7 +72,8 @@ const LogIn = () => {
 					{inputs.map((input) => (
 						<FormInput key={input.id} {...input} values={values[input.name]} onChange={onChange} />
 					))}
-					<button>Submit</button>
+					{errors !== null ? errors.map((e, index) => <p key={index}>{e.msg}</p>) : null}
+					<button className="btn-submit">Submit</button>
 				</form>
 			</div>
 		</>

@@ -18,7 +18,7 @@ export class User extends BaseEntity {
 	@Column("varchar", { length: 25 })
 	lastNames: string;
 
-	@Column("varchar", { length: 20 })
+	@Column({ type: "varchar", length: 20, collation: "utf8mb4_bin" })
 	userName: string;
 
 	@Column("varchar", { length: 50 })

@@ -5,6 +5,8 @@ import "reflect-metadata";
 
 import tracksRoutes from "./routes/tracks.routes";
 import usersRoutes from "./routes/users.routes";
+import authRoutes from "./routes/auth.routes";
+
 import { connectDB } from "./config/mysql";
 
 const app = express();
@@ -17,5 +19,6 @@ connectDB();
 
 app.use("/api", tracksRoutes);
 app.use("/api/user", usersRoutes);
+app.use("/api/auth", authRoutes);
 
 app.listen(PORT, () => console.log(`API REST en funcionamiento en el puerto ${PORT} 🔥`));
