@@ -24,7 +24,7 @@ export class User extends BaseEntity {
 	@Column("varchar", { length: 50 })
 	email: string;
 
-	@Column("varchar", { length: 15 })
+	@Column("varchar", { length: 60 })
 	password: string;
 
 	@Column({ type: "enum", enum: UserType, default: UserType.USER })

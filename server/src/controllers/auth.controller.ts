@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { User } from "../entities/User";
+import bcrypt from "bcrypt";
 
+import { User } from "../entities/User";
 import { handleHttp } from "../helpers/error.handle";
 
 const login = async (req: Request, res: Response) => {
@@ -12,7 +13,13 @@ const login = async (req: Request, res: Response) => {
 		if (!user) {
 			return res.status(404).json({ msg: "UserName doesn't exist." });
 		}
-		return res.status(200).json({ msg: "todo ok" });
+
+		const validPassword = await bcrypt.compare(password, user.password);
+		if (!validPassword) {
+			return res.status(401).json({ msg: "Incorrect password." });
+		}
+
+		return res.status(200).json({ msg: "User logged in" });
 	} catch (error) {
 		handleHttp(res, error, "ERROR_LOGIN_USER");
 	}

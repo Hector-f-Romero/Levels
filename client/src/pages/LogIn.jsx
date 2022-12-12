@@ -47,13 +47,19 @@ const LogIn = () => {
 		const res = await loginUserRequest(values);
 		setLoading(false);
 
+		// UserName don't exist.
 		if (res.status === 404) {
 			setErrors([]);
 			setErrors((errors) => [...errors, res.data]);
 		}
 
+		// Incorrect password.
+		if (res.status === 401) {
+			setErrors([]);
+			setErrors((errors) => [...errors, res.data]);
+		}
+
 		if (res.status === 200) {
-			console.log(values);
 			console.log(res);
 			console.log("Usuario existe en la BD");
 			navigate("/");

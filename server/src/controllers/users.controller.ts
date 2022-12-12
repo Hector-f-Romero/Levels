@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { nanoid } from "nanoid";
+import bcrypt from "bcrypt";
 
 import { User } from "../entities/User";
 import { handleHttp } from "../helpers/error.handle";
@@ -37,6 +38,7 @@ const getUser = async (req: Request, res: Response) => {
 const createUser = async (req: Request, res: Response) => {
 	try {
 		const { names, lastNames, userName, email, password, userType } = req.body;
+		const salt = await bcrypt.genSalt();
 
 		const user = new User();
 		user.idUser = nanoid();
@@ -44,7 +46,7 @@ const createUser = async (req: Request, res: Response) => {
 		user.lastNames = lastNames;
 		user.userName = userName;
 		user.email = email;
-		user.password = password;
+		user.password = await bcrypt.hash(password, salt);
 		user.userType = userType;
 		user.save();
 
