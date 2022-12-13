@@ -1,15 +1,46 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import Home from "../pages/Home";
+import React, { useState } from "react";
+
+import { Menu, MenuItem, MenuItemLink } from "../css/NavBar.elements";
+import { FiMenu, FiX } from "react-icons/fi";
 
 const NavBar = () => {
+	const [hamburguerMenu, setHamburgerMenu] = useState(false);
+
+	const handleHamburguerMenu = () => {
+		setHamburgerMenu(!hamburguerMenu);
+	};
+
 	return (
 		<header>
-			<h1>Levels</h1>
-			<NavLink to="/">Inicio</NavLink>
-			<NavLink to="/login">LogIn</NavLink>
+			<nav className="main-nav">
+				<MenuItemLink to="/">Levels</MenuItemLink>
+				<Menu pressed={hamburguerMenu}>
+					<MenuItem>
+						<MenuItemLink to="/" onClick={handleHamburguerMenu}>
+							Inicio
+						</MenuItemLink>
+					</MenuItem>
+					<MenuItem>
+						<MenuItemLink to="/login" onClick={handleHamburguerMenu}>
+							Playlists
+						</MenuItemLink>
+					</MenuItem>
+					<MenuItem>
+						<MenuItemLink to="/login" onClick={handleHamburguerMenu}>
+							Albums
+						</MenuItemLink>
+					</MenuItem>
+					<MenuItem>
+						<MenuItemLink to="/login" onClick={handleHamburguerMenu}>
+							Cuenta
+						</MenuItemLink>
+					</MenuItem>
+				</Menu>
+				<div className="toggle-menu" onClick={handleHamburguerMenu}>
+					{hamburguerMenu ? <FiX /> : <FiMenu />}
+				</div>
+			</nav>
 		</header>
 	);
 };
-
 export default NavBar;

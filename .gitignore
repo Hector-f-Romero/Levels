@@ -30,3 +30,5 @@ yarn-error.log*
 /server/node_modules
 /server/.env
 /sever/src/migrations/
+
+/source-refs.md
