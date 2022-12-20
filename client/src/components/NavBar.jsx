@@ -26,7 +26,7 @@ const NavBar = () => {
 						</MenuItemLink>
 					</MenuItem>
 					<MenuItem>
-						<MenuItemLink to="/login" onClick={handleHamburguerMenu}>
+						<MenuItemLink to="/albums" onClick={handleHamburguerMenu}>
 							Albums
 						</MenuItemLink>
 					</MenuItem>
