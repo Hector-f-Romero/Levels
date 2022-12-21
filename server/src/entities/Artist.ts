@@ -1,4 +1,5 @@
-import { Column, PrimaryGeneratedColumn, Entity, BaseEntity, OneToMany, ManyToMany } from "typeorm";
+import { Column, PrimaryGeneratedColumn, Entity, BaseEntity, OneToMany, ManyToMany, JoinTable } from "typeorm";
+import { Album } from "./Album";
 import { Track } from "./Track";
 
 export enum ArtistType {
@@ -11,10 +12,10 @@ export class Artist extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	idArtist: number;
 
-	@Column("varchar", { length: 25 })
+	@Column("varchar", { length: 25, nullable: true })
 	namesArtist: string;
 
-	@Column("varchar", { length: 25 })
+	@Column("varchar", { length: 25, nullable: true })
 	lastNamesArtist: string;
 
 	@Column("varchar", { length: 25 })
@@ -35,6 +36,20 @@ export class Artist extends BaseEntity {
 	@OneToMany(() => Track, (track) => track.idPrimaryArtist)
 	tracks: Track[];
 
-	@ManyToMany(() => Artist, (ftArtist) => ftArtist.tracks)
-	featuringArtists: Artist[];
+	@ManyToMany(() => Track, (ftArtist) => ftArtist.artists)
+	featuringArtists: Track[];
+
+	@ManyToMany(() => Album, (album) => album.artists, { onDelete: "CASCADE" })
+	@JoinTable({
+		name: "artist_albums",
+		joinColumn: {
+			name: "idArtist",
+			referencedColumnName: "idArtist",
+		},
+		inverseJoinColumn: {
+			name: "idAlbum",
+			referencedColumnName: "idAlbum",
+		},
+	})
+	albums: Album[];
 }

@@ -2,8 +2,7 @@ import { Request, Response } from "express";
 
 import { handleHttp } from "../helpers/error.handle";
 import { AppDataSource } from "../config/mysql";
-import { Playlist } from "../entities/Playlist";
-import { User } from "../entities/User";
+import { Playlist } from "../entities/index.entity";
 
 const getPlaylists = async (req: Request, res: Response) => {
 	try {
@@ -72,44 +71,4 @@ const deletePlaylist = async (req: Request, res: Response) => {
 	}
 };
 
-const addPlaylistToUser = async (req: Request, res: Response) => {
-	try {
-		const { idPlaylist, idUser } = req.body;
-		const user = await User.findOne({
-			where: [
-				{
-					idUser,
-				},
-			],
-		});
-
-		const playlist = await Playlist.findOne({
-			where: [
-				{
-					idPlaylist,
-				},
-			],
-		});
-
-		if (!user) {
-			return res.status(404).json({ msg: `Don't exist user in BD with the id ${idUser}` });
-		}
-
-		if (!playlist) {
-			return res.status(404).json({ msg: `Don't exist playlist in BD with the id ${idPlaylist}` });
-		}
-		console.log("-----------------------");
-		console.log(user);
-		console.log(playlist);
-
-		user.playlists = [playlist];
-		console.log("-----------------------");
-		console.log(user.playlists);
-		await user.save();
-		return res.status(201).json({ msg: `Playlist assigned successfully.` });
-	} catch (error) {
-		handleHttp(res, error, "ERROR_ADD_PLAYLIST_TO_USER (POST)");
-	}
-};
-
-export { getPlaylists, getPlaylist, createPlaylist, updatePlaylist, deletePlaylist, addPlaylistToUser };
+export { getPlaylists, getPlaylist, createPlaylist, updatePlaylist, deletePlaylist };

@@ -7,7 +7,9 @@ const AlbumCard = ({ dataInfo }) => {
 				<img src="" alt="img de album" />
 			</div>
 			<h2>{dataInfo.titleAlbum}</h2>
-			<h3>Artista</h3>
+			{dataInfo.artists.map((artist) => (
+				<h3 key={artist.idArtist}>{artist.stageName}</h3>
+			))}
 			<h3>{dataInfo.releaseDate}</h3>
 			<h3>{dataInfo.label}</h3>
 		</div>

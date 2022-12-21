@@ -15,7 +15,7 @@ const AppDataSource = new DataSource({
 	username: <string>process.env.USER_DB,
 	password: <string>process.env.PASSWORD_DB,
 	database: <string>process.env.DB,
-	synchronize: false,
+	synchronize: true,
 	logging: true,
 	entities: [User, Album, Genre, Playlist, Track, Artist],
 	migrations: [__dirname + "/migrations/*{.ts,.js}"],

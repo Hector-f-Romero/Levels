@@ -1,4 +1,5 @@
-import { Column, PrimaryGeneratedColumn, Entity, BaseEntity, OneToMany } from "typeorm";
+import { Column, PrimaryGeneratedColumn, Entity, BaseEntity, OneToMany, ManyToMany } from "typeorm";
+import { Artist } from "./Artist";
 import { Track } from "./Track";
 
 @Entity("albums")
@@ -20,4 +21,7 @@ export class Album extends BaseEntity {
 
 	@OneToMany(() => Track, (track) => track.idAlbum)
 	tracks: Track[];
+
+	@ManyToMany(() => Artist, (artist) => artist.albums, { onDelete: "CASCADE" })
+	artists: Artist[];
 }

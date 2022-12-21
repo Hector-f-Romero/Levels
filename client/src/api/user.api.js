@@ -6,7 +6,7 @@ import axios from "axios";
 
 const createUserRequest = async (data) => {
 	try {
-		const res = await axios.post("/api/user", data);
+		const res = await axios.post("/api/users", data);
 		return res;
 	} catch (error) {
 		console.log(error);

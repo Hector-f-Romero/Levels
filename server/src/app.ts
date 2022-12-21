@@ -3,7 +3,15 @@ import cors from "cors";
 import "dotenv/config";
 import "reflect-metadata";
 
-import { albumRoutes, authRoutes, playlistsRoutes, tracksRoutes, usersRoutes } from "./routes/index.routes";
+import {
+	albumsRoutes,
+	artistsRoutes,
+	authRoutes,
+	playlistsRoutes,
+	relationShipsRoutes,
+	tracksRoutes,
+	usersRoutes,
+} from "./routes/index.routes";
 
 import { connectDB } from "./config/mysql";
 
@@ -15,10 +23,12 @@ app.use(express.json());
 
 connectDB();
 
-app.use("/api/album", albumRoutes);
+app.use("/api/albums", albumsRoutes);
+app.use("/api/artists", artistsRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/api/playlist", playlistsRoutes);
-app.use("/api/track", tracksRoutes);
-app.use("/api/user", usersRoutes);
+app.use("/api/playlists", playlistsRoutes);
+app.use("/api/relationships", relationShipsRoutes);
+app.use("/api/tracks", tracksRoutes);
+app.use("/api/users", usersRoutes);
 
 app.listen(PORT, () => console.log(`API REST en funcionamiento en el puerto ${PORT} 🔥`));
