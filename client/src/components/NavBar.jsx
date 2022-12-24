@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
-import { Menu, MenuItem, MenuItemLink } from "../css/NavBar.elements";
+import "../css/navbar.css";
+import { Menu, MenuItem, MenuItemLink } from "../css/styled-component/NavBar.elements";
 import { FiMenu, FiX } from "react-icons/fi";
+import { UserContext } from "../context/userContext";
 
 const NavBar = () => {
 	const [hamburguerMenu, setHamburgerMenu] = useState(false);
 
+	const { userData } = useContext(UserContext);
+
+	console.log(userData.userType === "Admin");
 	const handleHamburguerMenu = () => {
 		setHamburgerMenu(!hamburguerMenu);
 	};
@@ -20,6 +25,8 @@ const NavBar = () => {
 							Inicio
 						</MenuItemLink>
 					</MenuItem>
+					{userData.userType === "Admin" && <MenuItem>Admin</MenuItem>}
+
 					<MenuItem>
 						<MenuItemLink to="/login" onClick={handleHamburguerMenu}>
 							Playlists
@@ -31,7 +38,7 @@ const NavBar = () => {
 						</MenuItemLink>
 					</MenuItem>
 					<MenuItem>
-						<MenuItemLink to="/login" onClick={handleHamburguerMenu}>
+						<MenuItemLink to="/create/album" onClick={handleHamburguerMenu}>
 							Cuenta
 						</MenuItemLink>
 					</MenuItem>

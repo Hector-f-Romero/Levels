@@ -5,12 +5,18 @@
 }
 
 .form-input {
-	/* margin: 15px 0px; */
+	margin-top: 4%;
+	font-size: 1.5rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
 	margin-bottom: 3%;
+	border-radius: 5px;
+}
+
+.label-input {
+	font-size: 1.5rem;
 }
 
 .form-container {

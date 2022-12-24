@@ -7,7 +7,7 @@ export class Album extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	idAlbum: number;
 
-	@Column("varchar", { length: 25 })
+	@Column("varchar", { length: 50 })
 	titleAlbum: string;
 
 	@Column("smallint")
@@ -17,7 +17,7 @@ export class Album extends BaseEntity {
 	label: string;
 
 	@Column("varchar", { length: 25, nullable: true })
-	coverAlbum: string;
+	albumCover: string;
 
 	@OneToMany(() => Track, (track) => track.idAlbum)
 	tracks: Track[];

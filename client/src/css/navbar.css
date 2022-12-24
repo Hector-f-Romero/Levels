@@ -1,0 +1,25 @@
+/* RESPONSIVE NAVBAR*/
+
+.main-nav {
+	color: var(--primartyTitle);
+	background-color: var(--navBarColor);
+	font-size: 1.5rem;
+	font-weight: 700;
+	height: 80px;
+	padding: 0 3vh;
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.toggle-menu {
+	font-size: 2em;
+	cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+	.toggle-menu {
+		display: none;
+	}
+}

@@ -36,13 +36,13 @@ const getAlbum = async (req: Request, res: Response) => {
 
 const createAlbum = async (req: Request, res: Response): Promise<void> => {
 	try {
-		const { titleAlbum, releaseDate, label, coverAlbum } = req.body;
+		const { titleAlbum, releaseDate, label, albumCover } = req.body;
 
 		const album = new Album();
 		album.titleAlbum = titleAlbum;
 		album.releaseDate = releaseDate;
 		album.label = label;
-		album.coverAlbum = coverAlbum;
+		album.albumCover = albumCover;
 		album.save();
 
 		res.status(201).json({ msg: `Album ${titleAlbum} created successfully .`, album });
@@ -86,31 +86,11 @@ const getAlbumsWithArtist = async (req: Request, res: Response) => {
 				"album.titleAlbum",
 				"album.releaseDate",
 				"album.label",
-				"album.coverAlbum",
+				"album.albumCover",
 				"artist.idArtist",
 				"artist.stageName",
 			])
 			.getMany();
-		//
-
-		/**"idAlbum": 2,
-        "titleAlbum": "Fórmula, vol. 2",
-        : 2014,
-        : "Sony Music Latin",
-        : "img2.jpg",
-        "album.artists": [
-            {
-                "idArtist": 5,
-                "namesArtist": "Félix Gerardo",
-                "lastNamesArtist": "Ortiz Torres",
-                "stageName": "Zion",
-                "typeArtist": "Artist",
-                "bornDate": "1981-08-05",
-                "countryOrigin": "Puerto Rico",
-                "artistPhoto": "img7.jpg"
-            }
-        ] */
-
 		return res.status(200).json(albums);
 		// res.json({ msg: "hola" });
 	} catch (error) {

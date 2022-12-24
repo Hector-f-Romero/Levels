@@ -10,9 +10,17 @@ const FormInput = (props) => {
 	};
 
 	return (
-		<div className="form-input">
-			<label htmlFor="">{label}</label>
-			<input {...inputProps} onChange={onChange} onBlur={handleFocus} focused={focused.toString()} />
+		<div>
+			<label className="label-input" htmlFor="">
+				{label}
+			</label>
+			<input
+				className="form-input"
+				{...inputProps}
+				onChange={onChange}
+				onBlur={handleFocus}
+				focused={focused.toString()}
+			/>
 			<span className="input-error">{errorMessage}</span>
 		</div>
 	);

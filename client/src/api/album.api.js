@@ -2,7 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({ baseURL: "http://localhost:4000/api/albums" });
 
-const getAlbumsRequest = async (req, res) => {
+const getAlbumsRequest = async () => {
 	try {
 		const res = await instance.get("/info/artists");
 		return res.data;
@@ -11,4 +11,12 @@ const getAlbumsRequest = async (req, res) => {
 	}
 };
 
-export { getAlbumsRequest };
+const createAlbumRequest = async (data) => {
+	try {
+		const res = await instance.post("/", data);
+		return res.data;
+	} catch (e) {
+		return e.response;
+	}
+};
+export { getAlbumsRequest, createAlbumRequest };
