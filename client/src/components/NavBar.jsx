@@ -10,7 +10,6 @@ const NavBar = () => {
 
 	const { userData } = useContext(UserContext);
 
-	console.log(userData.userType === "Admin");
 	const handleHamburguerMenu = () => {
 		setHamburgerMenu(!hamburguerMenu);
 	};

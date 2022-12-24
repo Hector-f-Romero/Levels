@@ -19,7 +19,7 @@ const login = async (req: Request, res: Response) => {
 			return res.status(401).json({ msg: "Incorrect password." });
 		}
 
-		return res.status(200).json({ msg: "User logged in" });
+		return res.status(200).json(user);
 	} catch (error) {
 		handleHttp(res, error, "ERROR_LOGIN_USER");
 	}

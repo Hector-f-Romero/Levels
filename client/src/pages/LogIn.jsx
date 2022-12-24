@@ -1,9 +1,10 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { loginUserRequest } from "../api/user.api";
 import FormInput from "../components/FormInput";
+import { UserContext } from "../context/userContext";
 import "../css/form.css";
 
 const LogIn = () => {
@@ -13,6 +14,7 @@ const LogIn = () => {
 	});
 	const [errors, setErrors] = useState([]);
 	const [loading, setLoading] = useState(false);
+	const { setUserData } = useContext(UserContext);
 
 	const navigate = useNavigate();
 
@@ -61,8 +63,7 @@ const LogIn = () => {
 		}
 
 		if (res.status === 200) {
-			console.log(res);
-			console.log("Usuario existe en la BD");
+			setUserData(res.data);
 			navigate("/");
 		}
 	};
