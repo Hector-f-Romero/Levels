@@ -26,6 +26,7 @@ export const MenuItem = styled.li`
 	text-decoration: none;
 	color: inherit;
 	margin: 2em 0;
+	cursor: pointer;
 `;
 
 export const MenuItemLink = styled(NavLink)`

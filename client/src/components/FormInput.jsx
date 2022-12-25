@@ -1,27 +1,31 @@
 import React from "react";
-import { useState } from "react";
 
-const FormInput = (props) => {
-	const { label, onChange, errorMessage, id, ...inputProps } = props;
-	const [focused, setFocused] = useState(false);
+const FormInput = ({ register, errors, settings }) => {
+	const { type, name, placeholder, label, validationProps } = settings;
 
-	const handleFocus = (e) => {
-		setFocused(true);
-	};
+	if (type === "select") {
+		const { options } = settings;
+		return (
+			<div className="input-container">
+				<label htmlFor={name} className="label-input">
+					{label}
+				</label>
+				<select {...register(name)} className="form-input">
+					{options.map((option) => (
+						<option value={option.value}>{option.text}</option>
+					))}
+				</select>
+			</div>
+		);
+	}
 
 	return (
-		<div>
-			<label className="label-input" htmlFor="">
+		<div className="input-container">
+			<label htmlFor={name} className="label-input">
 				{label}
 			</label>
-			<input
-				className="form-input"
-				{...inputProps}
-				onChange={onChange}
-				onBlur={handleFocus}
-				focused={focused.toString()}
-			/>
-			<span className="input-error">{errorMessage}</span>
+			<input type={type} placeholder={placeholder} {...register(name, validationProps)} className="form-input" />
+			{errors[name] && <span className="input-error">{errors[name]["message"]}</span>}
 		</div>
 	);
 };

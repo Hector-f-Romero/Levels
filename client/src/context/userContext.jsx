@@ -4,8 +4,13 @@ export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
 	const [userData, setUserData] = useState({
-		userName: "Test1",
-		userType: "User",
+		idUser: "",
+		names: "",
+		lastNames: "",
+		userName: "",
+		email: "",
+		password: "",
+		userType: "",
 	});
 	const [loadingUserData, setLoadingUserData] = useState(false);
 

@@ -1,3 +1,22 @@
+* {
+	margin: 0;
+	box-sizing: border-box;
+	font-family: "Montserrat", sans-serif;
+}
+
+:root {
+	--navBarColor: #282828;
+	--primartyTitle: #ffffff;
+	--bgPrimary: #121212;
+	--bgSecondary: #303030;
+	--primaryLightColor: #6d6d6d;
+	--bgCard: #2e2f2e;
+	--imgCard: #d9d9d9;
+	--secondaryText: #b3b3b3;
+	--bgModal: #262626;
+	--PrimaryTextModal: #bdbdbd;
+}
+
 .modal-wrapper {
 	width: 100%;
 	height: 100%;
@@ -11,7 +30,7 @@
 
 .modal-window {
 	position: relative;
-	background-color: rgb(20, 151, 24);
+	background-color: var(--bgModal);
 	border-radius: 20px;
 	padding: 15em;
 	min-width: 320px;

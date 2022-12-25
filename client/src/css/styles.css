@@ -8,8 +8,11 @@
 	--navBarColor: #282828;
 	--primartyTitle: #ffffff;
 	--bgPrimary: #121212;
+	--bgSecondary: #303030;
+	--primaryLightColor: #6d6d6d;
 	--bgCard: #2e2f2e;
 	--imgCard: #d9d9d9;
+	--secondaryText: #b3b3b3;
 }
 
 /* a:-webkit-any-link {
@@ -28,10 +31,12 @@ body {
 }
 
 h1 {
+	font-size: 3rem;
 	font-weight: 700;
 }
 
 h2 {
+	font-size: 1.5rem;
 	font-weight: 500;
 }
 
@@ -51,6 +56,13 @@ header {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+.btn {
+	width: 10em;
+	font-size: 1.2rem;
+	/* margin-left: auto;
+	margin-right: auto; */
 }
 
 .allTracks {
@@ -147,4 +159,44 @@ header {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.account-container {
+	background-color: var(--bgSecondary);
+	width: 80vw;
+	margin: 3em auto;
+	padding: 2em 3em;
+}
+
+.account-container h1 {
+	text-align: center;
+}
+
+.account-container h2 {
+	padding-top: 0.6em;
+	padding-bottom: 1em;
+	padding-left: 0.7em;
+	/* margin-top: 2em; */
+}
+
+.profile-table {
+	font-size: 1.1rem;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	word-wrap: break-word;
+}
+
+.profile-table td {
+	padding: 0.6em;
+}
+
+.profile-table td:first-child {
+	color: var(--secondaryText);
+	padding-right: 4em;
+	/* padding: ; */
+}
+
+.profile-table td:nth-child(2) {
+	color: var(--secondaryText);
 }
