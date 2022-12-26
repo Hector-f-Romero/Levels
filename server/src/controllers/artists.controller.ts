@@ -33,7 +33,6 @@ const getArtist = async (req: Request, res: Response) => {
 const createArtist = async (req: Request, res: Response): Promise<void> => {
 	try {
 		const { namesArtist, lastNamesArtist, stageName, typeArtist, bornDate, countryOrigin, artistPhoto } = req.body;
-
 		const artist = new Artist();
 		artist.namesArtist = namesArtist;
 		artist.lastNamesArtist = lastNamesArtist;
@@ -44,7 +43,7 @@ const createArtist = async (req: Request, res: Response): Promise<void> => {
 		artist.artistPhoto = artistPhoto;
 		artist.save();
 
-		res.status(201).json({ msg: `Artist/group ${stageName} created successfully .`, artist });
+		res.status(201).json(artist);
 	} catch (error) {
 		handleHttp(res, error, "ERROR_CREATE_ARTIST (POST)");
 	}
