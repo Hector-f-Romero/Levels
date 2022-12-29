@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const instance = axios.create({ baseURL: "http://localhost:4000/api/artists" });
+const instance = axios.create({ baseURL: "http://localhost:4000/api/genres" });
 
-const getArtistsRequest = async () => {
+const getGenresRequest = async () => {
 	try {
 		const res = await instance.get("/");
 		return res.data;
@@ -11,7 +11,7 @@ const getArtistsRequest = async () => {
 	}
 };
 
-const createArtistRequest = async (data) => {
+const createGenreRequest = async (data) => {
 	try {
 		const res = await instance.post("/", data);
 		return res.data;
@@ -20,4 +20,4 @@ const createArtistRequest = async (data) => {
 	}
 };
 
-export { getArtistsRequest, createArtistRequest };
+export { getGenresRequest, createGenreRequest };

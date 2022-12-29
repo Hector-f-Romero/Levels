@@ -35,6 +35,10 @@
 	margin-bottom: 0.5em;
 }
 
+.form-container form {
+	width: 50%;
+}
+
 .form-input {
 	width: 100%;
 	/* width: 260px; */

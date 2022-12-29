@@ -2,10 +2,13 @@ import React from "react";
 
 import { FiChevronDown } from "react-icons/fi";
 
-const FormInput = ({ register, errors, settings, watchFields, watch, resetField }) => {
+const FormInput = ({ register, errors, settings, watchFields, watch, resetField, fieldsToReset }) => {
 	const { type, name, placeholder, label, dynamic, validationProps } = settings;
 
-	let watchValues = watch(watchFields);
+	let watchValues;
+	if (watchFields) {
+		watchValues = watch(watchFields);
+	}
 
 	// Hidden inputs excluisive of artist or group
 	if (dynamic) {
@@ -14,14 +17,10 @@ const FormInput = ({ register, errors, settings, watchFields, watch, resetField 
 	}
 
 	// Don't reset select input.
-	const resetFields = () => {
-		resetField("namesArtist");
-		resetField("lastNamesArtist");
-		resetField("stageName");
-		resetField("bornDate");
-		resetField("formedYear");
-		resetField("countryOrigin");
-		resetField("artistPhoto");
+	const resetFields = (fields) => {
+		fields.map((field) => {
+			resetField(field);
+		});
 	};
 
 	if (type === "select") {
@@ -34,12 +33,14 @@ const FormInput = ({ register, errors, settings, watchFields, watch, resetField 
 				<select
 					{...register(name, {
 						onChange: (e) => {
-							resetFields();
+							if (resetFields) {
+								resetFields(fieldsToReset);
+							}
 						},
 					})}
 					className="form-input select-input">
 					{options.map((option) => (
-						<option key={option.id} value={option.value}>
+						<option key={option.value} value={option.value}>
 							{option.text}
 						</option>
 					))}
@@ -50,6 +51,7 @@ const FormInput = ({ register, errors, settings, watchFields, watch, resetField 
 			</div>
 		);
 	}
+
 	return (
 		<div className="input-container">
 			<label htmlFor={name} className="label-input">

@@ -164,27 +164,34 @@ const CreateArtist = () => {
 	};
 
 	return (
-		<>
-			<div className="form-container">
-				<h1>Create artist or group</h1>
-				<form onSubmit={handleSubmit(onSubmit)}>
-					{inputs.map((input) => (
-						<FormInput
-							key={input.id}
-							register={register}
-							settings={input}
-							errors={errors}
-							watchFields={["typeArtist"]}
-							watch={watch}
-							resetField={resetField}
-						/>
-					))}
-					<div className="center-container">
-						<input type="submit" value={"Submit"} className="btn-submit" />
-					</div>
-				</form>
-			</div>
-		</>
+		<div className="form-container">
+			<h1>Create artist or group</h1>
+			<form onSubmit={handleSubmit(onSubmit)}>
+				{inputs.map((input) => (
+					<FormInput
+						key={input.id}
+						register={register}
+						settings={input}
+						errors={errors}
+						watchFields={["typeArtist"]}
+						watch={watch}
+						resetField={resetField}
+						fieldsToReset={[
+							"namesArtist",
+							"lastNamesArtist",
+							"stageName",
+							"bornDate",
+							"formedYear",
+							"countryOrigin",
+							"artistPhoto",
+						]}
+					/>
+				))}
+				<div className="center-container">
+					<input type="submit" value={"Submit"} className="btn-submit" />
+				</div>
+			</form>
+		</div>
 	);
 };
 

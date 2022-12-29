@@ -7,6 +7,7 @@ import {
 	albumsRoutes,
 	artistsRoutes,
 	authRoutes,
+	genresRoutes,
 	playlistsRoutes,
 	relationShipsRoutes,
 	tracksRoutes,
@@ -26,6 +27,7 @@ connectDB();
 app.use("/api/albums", albumsRoutes);
 app.use("/api/artists", artistsRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/genres", genresRoutes);
 app.use("/api/playlists", playlistsRoutes);
 app.use("/api/relationships", relationShipsRoutes);
 app.use("/api/tracks", tracksRoutes);

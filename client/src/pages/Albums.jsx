@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { getAlbumsRequest } from "../api/album.api";
+import { getAlbumsWithArtistRequest } from "../api/album.api";
 import AlbumCard from "../components/AlbumCard";
 import { DataContext } from "../context/dataContext";
 
@@ -8,7 +8,7 @@ const Albums = () => {
 
 	const getAlbums = async () => {
 		setLoadingData(true);
-		const res = await getAlbumsRequest();
+		const res = await getAlbumsWithArtistRequest();
 		setData(res);
 		setLoadingData(false);
 	};

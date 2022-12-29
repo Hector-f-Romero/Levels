@@ -13,6 +13,8 @@ import NotFound from "./pages/NotFound";
 
 import CreateAlbum from "./pages/admin/CreateAlbum";
 import CreateArtist from "./pages/admin/CreateArtist";
+import CreateGenre from "./pages/admin/CreateGenre";
+import CreateTrack from "./pages/admin/CreateTrack";
 
 const App = () => {
 	return (
@@ -23,10 +25,12 @@ const App = () => {
 					<Routes>
 						<Route path="/" element={<Home />} />
 						<Route path="/albums" element={<Albums />} />
-						<Route path="/login" element={<LogIn />} />
+						<Route path="/account" element={<Account />} />
 						<Route path="/create/album" element={<CreateAlbum />} />
 						<Route path="/create/artist" element={<CreateArtist />} />
-						<Route path="/account" element={<Account />} />
+						<Route path="/create/genre" element={<CreateGenre />} />
+						<Route path="/create/track" element={<CreateTrack />} />
+						<Route path="/login" element={<LogIn />} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>
 				</BrowserRouter>

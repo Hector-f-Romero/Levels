@@ -1,21 +1,23 @@
 import React from "react";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
+import { UserContext } from "../context/userContext";
 import { loginUserRequest } from "../api/user.api";
 import FormInput from "../components/FormInput";
-import { UserContext } from "../context/userContext";
 import "../css/form.css";
 
 const LogIn = () => {
-	const [values, setValues] = useState({
-		userName: "",
-		password: "",
-	});
-	const [errors, setErrors] = useState([]);
-	const [loading, setLoading] = useState(false);
-	const { setUserData } = useContext(UserContext);
-
+	const {
+		register,
+		handleSubmit,
+		watch,
+		reset,
+		resetField,
+		formState: { errors },
+	} = useForm({ defaultValues: { userName: "Megan708" } });
+	const { setUserData, setLoadingUserData } = useContext(UserContext);
 	const navigate = useNavigate();
 
 	const inputs = [
@@ -23,65 +25,66 @@ const LogIn = () => {
 			id: 1,
 			name: "userName",
 			label: "User Name",
-			placeholder: "UserName",
 			type: "text",
-			maxLength: 20,
-			minLength: 3,
-			maxlenght: "15",
-			errorMessage: "UserName cannot be empty.",
-			required: true,
+			placeholder: "UserName",
+			validationProps: {
+				required: "Username cannot be empty.",
+				maxLength: {
+					value: 20,
+					message: "Names should be  at most 20 chars long.",
+				},
+			},
 		},
 		{
 			id: 2,
 			name: "password",
 			label: "Password",
-			placeholder: "Password",
 			type: "password",
-			maxLength: 15,
-			minLength: 3,
-			errorMessage: "Password cannot be empty.",
-			required: true,
+			placeholder: "Password",
+			validationProps: {
+				required: "Password cannot be empty.",
+				maxLength: {
+					value: 15,
+					message: "Names should be  at most 15 chars long.",
+				},
+			},
 		},
 	];
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		setLoading(true);
-		const res = await loginUserRequest(values);
-		setLoading(false);
+	const onSubmit = async (data) => {
+		console.log(data);
+		setLoadingUserData(true);
+		const res = await loginUserRequest(data);
+		setLoadingUserData(false);
 
 		// UserName don't exist.
 		if (res.status === 404) {
-			setErrors([]);
-			setErrors((errors) => [...errors, res.data]);
+			alert("userName don't exist.");
 		}
 
 		// Incorrect password.
 		if (res.status === 401) {
-			setErrors([]);
-			setErrors((errors) => [...errors, res.data]);
+			alert("Incorrect password.");
 		}
 
 		if (res.status === 200) {
 			setUserData(res.data);
 			navigate("/");
+			reset();
 		}
-	};
-
-	const onChange = (e) => {
-		setValues({ ...values, [e.target.name]: e.target.value });
 	};
 
 	return (
 		<>
-			<h1>Log IN</h1>
-			<div className="">
-				<form className="form-container" onSubmit={handleSubmit}>
+			<div className="form-container">
+				<h1>Sign in</h1>
+				<form onSubmit={handleSubmit(onSubmit)}>
 					{inputs.map((input) => (
-						<FormInput key={input.id} {...input} values={values[input.name]} onChange={onChange} />
+						<FormInput key={input.id} register={register} settings={input} errors={errors} watch={watch} />
 					))}
-					{errors !== null ? errors.map((e, index) => <p key={index}>{e.msg}</p>) : null}
-					<button className="btn-submit">Submit</button>
+					<div className="center-container">
+						<input type="submit" value={"Submit"} className="btn-submit" />
+					</div>
 				</form>
 			</div>
 		</>
