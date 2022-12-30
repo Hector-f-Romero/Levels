@@ -1,82 +1,106 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { createAlbumRequest } from "../../api/album.api";
 
 import FormInput from "../../components/FormInput";
 
 const CreateAlbum = () => {
-	const [values, setValues] = useState({
-		titleAlbum: "",
-		releaseDate: "",
-		label: "",
-		coverAlbum: "",
-	});
-	const [errors, setErrors] = useState([]);
+	const {
+		register,
+		handleSubmit,
+		watch,
+		reset,
+		resetField,
+		formState: { errors },
+	} = useForm();
 
 	const inputs = [
 		{
 			id: 1,
 			name: "titleAlbum",
 			label: "Title Album",
-			placeholder: "Title of Album",
 			type: "text",
-			maxLength: 50,
-			minLength: 1,
-			errorMessage: "Title cannot be empty.",
-			required: true,
+			placeholder: "Title of Album",
+			validationProps: {
+				required: "Title cannot be empty.",
+				maxLength: {
+					value: 50,
+					message: "Release date should be 4 chars long.",
+				},
+				minLength: {
+					value: 1,
+					message: "Release date should be 4 chars long.",
+				},
+			},
 		},
+
 		{
 			id: 2,
 			name: "releaseDate",
 			label: "Release Date",
-			placeholder: "2020",
 			type: "text",
-			maxLength: 4,
-			minLength: 4,
-			errorMessage: "Release Date cannot be empty.",
-			required: true,
+			placeholder: "2020",
+			validationProps: {
+				required: "Release date cannot be empty.",
+				maxLength: {
+					value: 4,
+					message: "Release date should be 4 chars long.",
+				},
+				minLength: {
+					value: 4,
+
+					message: "Release date should be 4 chars long.",
+				},
+			},
 		},
 		{
 			id: 3,
 			name: "label",
 			label: "Label",
-			placeholder: "Fania Records",
 			type: "text",
-			maxLength: 25,
-			minLength: 3,
-			errorMessage: "Label cannot be empty.",
-			required: true,
+			placeholder: "Fania Records",
+			validationProps: {
+				required: "Label cannot be empty.",
+				maxLength: {
+					value: 25,
+					message: "Duration should be at least 3 at most 25 chars long.",
+				},
+				minLength: {
+					value: 3,
+
+					message: "Duration should be at least 3 at most 25 chars long.",
+				},
+			},
 		},
-		{
-			id: 4,
-			name: "coverAlbum",
-			label: "Album cover",
-			type: "file",
-			accept: ".jpg,.png,.jpeg,.webp",
-			required: false,
-		},
+		// {
+		// 	id: 4,
+		// 	name: "coverAlbum",
+		// 	label: "Album cover",
+		// 	type: "file",
+		// 	validationProps: {
+		// 		required: "Album cover cannot be empty.",
+		// 	},
+		// },
 	];
 
-	const onChange = (e) => {
-		setValues({ ...values, [e.target.name]: e.target.value });
-	};
-
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		const res = await createAlbumRequest(values);
+	const onSubmit = async (data) => {
+		const res = await createAlbumRequest(data);
 		console.log(res);
+		reset();
 	};
 
 	return (
-		<>
+		<div className="form-container">
 			<h1>Create album</h1>
-			<form className="form-container" onSubmit={handleSubmit}>
+			<form onSubmit={handleSubmit(onSubmit)}>
 				{inputs.map((input) => (
-					<FormInput key={input.id} {...input} values={values[input.name]} onChange={onChange} />
+					<FormInput key={input.id} register={register} settings={input} errors={errors} watch={watch} />
 				))}
-				{errors !== null ? errors.map((e, index) => <p key={index}>{e.msg}</p>) : null}
-				<button className="btn-submit">Submit</button>
+				<div className="center-container">
+					<input type="submit" value={"Submit"} className="btn-submit" />
+				</div>
 			</form>
-		</>
+		</div>
 	);
 };
 

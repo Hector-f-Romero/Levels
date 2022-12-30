@@ -8,8 +8,9 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "nodemon src/app.ts",
 		"start:dev": "tsc && concurrently \"tsc -w\" \"nodemon/dist/src/app.js\"",
-		"typeorm": "typeorm-ts-node-esm -d ./src/config/mysql.ts",
+		"typeorm": "typeorm-ts-node-esm",
 		"m:gen": "npm run typeorm migration:generate",
+		"m:cre": "npm run typeorm migration:create",
 		"m:run": "npm run typeorm migration:run"
 	},
 	"keywords": [],

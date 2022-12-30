@@ -1,12 +1,7 @@
 import { DataSource } from "typeorm";
 import "dotenv/config";
 
-import { User } from "../entities/User";
-import { Album } from "../entities/Album";
-import { Genre } from "../entities/Genre";
-import { Playlist } from "../entities/Playlist";
-import { Track } from "../entities/Track";
-import { Artist } from "../entities/Artist";
+import { Album, Artist, Genre, Playlist, Track, User } from "../entities/index.entity";
 
 const AppDataSource = new DataSource({
 	type: "mysql",
@@ -18,8 +13,7 @@ const AppDataSource = new DataSource({
 	synchronize: true,
 	logging: true,
 	entities: [User, Album, Genre, Playlist, Track, Artist],
-	migrations: [__dirname + "/migrations/*{.ts,.js}"],
-	migrationsRun: true,
+	migrations: ["../migrations/*{.ts,.js}"],
 });
 
 const connectDB = async () => {
