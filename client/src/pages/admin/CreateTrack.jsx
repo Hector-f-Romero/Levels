@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+
 import { getAlbumsRequest } from "../../api/album.api";
 import { getArtistsRequest } from "../../api/artist.api";
 import { getGenresRequest } from "../../api/genre.api";
@@ -12,6 +14,10 @@ const CreateTrack = () => {
 	const [artists, setArtists] = useState([]);
 	const [genres, setGenres] = useState([]);
 	const [loading, setLoading] = useState(false);
+
+	const [featuringList, setFeaturingList] = useState([]);
+	const [availableArtists, setAvailableArtists] = useState([]);
+	const [disabledList, setDisabledList] = useState(false);
 
 	const {
 		register,
@@ -138,25 +144,50 @@ const CreateTrack = () => {
 		const resArtists = await getArtistsRequest();
 
 		const albums = normalizeSelectVales(resAlbums);
-
-		// const artists = normalizeSelectVales(resArtists);
-		// console.log(albums);
 		albums.unshift({ value: 0, text: "No album" });
+
 		setAlbums(albums);
 		setGenres(normalizeSelectVales(resGenres));
 		setArtists(normalizeSelectVales(resArtists));
-
-		//
-		//
-		//
-
-		// console.log(inputs);
+		setAvailableArtists(normalizeSelectVales(resArtists));
 		setLoading(false);
 	};
 
 	const onSubmit = async (data) => {
 		console.log(data);
-		reset();
+		// reset();
+		Swal.fire({
+			title: "Track created!",
+			text: `Track ${data.titleTrack} was created successfully.`,
+			icon: "success",
+			confirmButtonText: "Get it",
+			color: "#FFF",
+			background: "#303030",
+			confirmButtonColor: "#6d6d6d",
+		});
+	};
+
+	const addFeaturing = (e) => {
+		e.preventDefault();
+		setFeaturingList([...featuringList, availableArtists]);
+
+		if (featuringList.length < availableArtists.length - 1) {
+			setDisabledList(false);
+		} else {
+			setDisabledList(true);
+		}
+	};
+
+	const deleteFeaturing = (e, index) => {
+		e.preventDefault();
+		const list = [...featuringList];
+		list.splice(index, 1);
+		setFeaturingList(list);
+		if (featuringList.length <= availableArtists.length) {
+			setDisabledList(false);
+		} else {
+			setDisabledList(true);
+		}
 	};
 
 	if (loading) {
@@ -187,6 +218,29 @@ const CreateTrack = () => {
 						]}
 					/>
 				))}
+				{/* {featuringList.length < availableArtists.length ? (
+					
+				) : null} */}
+				<button onClick={(e) => addFeaturing(e)} disabled={disabledList}>
+					Add featuring artist
+				</button>
+				{featuringList.map((featuring, index) => (
+					<div key={index}>
+						<FormInput
+							register={register}
+							settings={{
+								id: 6,
+								name: "idPrimaryArtist",
+								label: "Primary artist",
+								type: "select",
+								options: availableArtists,
+							}}
+							errors={errors}
+						/>
+						<button onClick={(e) => deleteFeaturing(e)}>Delete featuring</button>
+					</div>
+				))}
+
 				<div className="center-container">
 					<input type="submit" value={"Submit"} className="btn-submit" />
 				</div>

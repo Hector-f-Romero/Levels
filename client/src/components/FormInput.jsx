@@ -18,6 +18,10 @@ const FormInput = ({ register, errors, settings, watchFields, watch, resetField,
 
 	// Don't reset select input.
 	const resetFields = (fields) => {
+		if (!fields) {
+			return;
+		}
+
 		fields.map((field) => {
 			resetField(field);
 		});
