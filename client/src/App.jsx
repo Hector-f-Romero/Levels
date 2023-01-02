@@ -15,6 +15,7 @@ import CreateAlbum from "./pages/admin/CreateAlbum";
 import CreateArtist from "./pages/admin/CreateArtist";
 import CreateGenre from "./pages/admin/CreateGenre";
 import CreateTrack from "./pages/admin/CreateTrack";
+import CreateFeaturings from "./pages/admin/CreateFeaturings";
 
 const App = () => {
 	return (
@@ -30,6 +31,7 @@ const App = () => {
 						<Route path="/create/artist" element={<CreateArtist />} />
 						<Route path="/create/genre" element={<CreateGenre />} />
 						<Route path="/create/track" element={<CreateTrack />} />
+						<Route path="/create/track/featurings" element={<CreateFeaturings />} />
 						<Route path="/login" element={<LogIn />} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>

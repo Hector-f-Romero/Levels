@@ -1,4 +1,4 @@
-const normalizeSelectVales = (data) => {
+const normalizeSelectValues = (data) => {
 	const normalizedData = [];
 
 	for (const iterator of data) {
@@ -6,25 +6,19 @@ const normalizeSelectVales = (data) => {
 		const { idGenre, idAlbum, idArtist } = iterator;
 		if (idGenre) {
 			const { nameGenre } = iterator;
-			normalizedItem.value = idGenre;
+			normalizedItem.value = Number(idGenre);
 			normalizedItem.text = nameGenre;
-			// const value = iterator.idGenre;
-			// const text = iterator.nameGenre;
-			// delete iterator["idGenre"];
-			// delete iterator["nameGenre"];
-			// iterator.value = value;
-			// iterator.text = text;
 		}
 
 		if (idAlbum) {
 			const { titleAlbum } = iterator;
-			normalizedItem.value = idAlbum;
+			normalizedItem.value = Number(idAlbum);
 			normalizedItem.text = titleAlbum;
 		}
 
 		if (idArtist) {
 			const { stageName } = iterator;
-			normalizedItem.value = idArtist;
+			normalizedItem.value = Number(idArtist);
 			normalizedItem.text = stageName;
 		}
 
@@ -34,4 +28,4 @@ const normalizeSelectVales = (data) => {
 	return normalizedData;
 };
 
-export { normalizeSelectVales };
+export { normalizeSelectValues };

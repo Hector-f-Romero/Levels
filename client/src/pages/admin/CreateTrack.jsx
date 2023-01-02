@@ -1,23 +1,18 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import { React, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import Swal from "sweetalert2";
 
 import { getAlbumsRequest } from "../../api/album.api";
 import { getArtistsRequest } from "../../api/artist.api";
 import { getGenresRequest } from "../../api/genre.api";
 import FormInput from "../../components/FormInput";
-import { normalizeSelectVales } from "../../helpers/normalize-data";
+import { normalizeSelectValues } from "../../helpers/normalize-data";
 
 const CreateTrack = () => {
 	const [albums, setAlbums] = useState([]);
 	const [artists, setArtists] = useState([]);
 	const [genres, setGenres] = useState([]);
 	const [loading, setLoading] = useState(false);
-
-	const [featuringList, setFeaturingList] = useState([]);
-	const [availableArtists, setAvailableArtists] = useState([]);
-	const [disabledList, setDisabledList] = useState(false);
 
 	const {
 		register,
@@ -28,11 +23,50 @@ const CreateTrack = () => {
 		formState: { errors },
 	} = useForm();
 
+	const navigate = useNavigate();
+
 	useEffect(() => {
 		setLoading(true);
 		getSelectsData();
 		reset();
 	}, []);
+
+	const getSelectsData = async () => {
+		const resGenres = await getGenresRequest();
+		const resAlbums = await getAlbumsRequest();
+		const resArtists = await getArtistsRequest();
+
+		const albums = normalizeSelectValues(resAlbums);
+		albums.unshift({ value: "", text: "No album" });
+
+		setAlbums(albums);
+		setGenres(normalizeSelectValues(resGenres));
+		setArtists(normalizeSelectValues(resArtists));
+		setLoading(false);
+	};
+
+	const onSubmit = async (data) => {
+		if (data.idGenre) {
+			data.idGenre = Number(data.idGenre);
+		}
+
+		if (data.idAlbum) {
+			data.idAlbum = Number(data.idAlbum);
+		}
+
+		if (data.idPrimaryArtist) {
+			data.idPrimaryArtist = Number(data.idPrimaryArtist);
+		}
+
+		console.log(data);
+
+		// reset();
+		navigate("/create/track/featurings", { state: { data } });
+	};
+
+	if (loading) {
+		return <h1>Loading...</h1>;
+	}
 
 	const inputs = [
 		{
@@ -70,6 +104,7 @@ const CreateTrack = () => {
 					value: 4,
 					message: "Duration should be at least 2 at most 25 chars long.",
 				},
+				valueAsNumber: true,
 			},
 		},
 		{
@@ -88,6 +123,7 @@ const CreateTrack = () => {
 					value: 4,
 					message: "Release Date should be 4 chars long",
 				},
+				valueAsNumber: true,
 			},
 		},
 		{
@@ -106,6 +142,7 @@ const CreateTrack = () => {
 			label: "Track album",
 			type: "select",
 			options: albums,
+			validationProps: {},
 		},
 		{
 			id: 6,
@@ -113,6 +150,7 @@ const CreateTrack = () => {
 			label: "Primary artist",
 			type: "select",
 			options: artists,
+			validationProps: {},
 		},
 		// {
 		// 	id: 7,
@@ -138,62 +176,6 @@ const CreateTrack = () => {
 		// },
 	];
 
-	const getSelectsData = async () => {
-		const resGenres = await getGenresRequest();
-		const resAlbums = await getAlbumsRequest();
-		const resArtists = await getArtistsRequest();
-
-		const albums = normalizeSelectVales(resAlbums);
-		albums.unshift({ value: 0, text: "No album" });
-
-		setAlbums(albums);
-		setGenres(normalizeSelectVales(resGenres));
-		setArtists(normalizeSelectVales(resArtists));
-		setAvailableArtists(normalizeSelectVales(resArtists));
-		setLoading(false);
-	};
-
-	const onSubmit = async (data) => {
-		console.log(data);
-		// reset();
-		Swal.fire({
-			title: "Track created!",
-			text: `Track ${data.titleTrack} was created successfully.`,
-			icon: "success",
-			confirmButtonText: "Get it",
-			color: "#FFF",
-			background: "#303030",
-			confirmButtonColor: "#6d6d6d",
-		});
-	};
-
-	const addFeaturing = (e) => {
-		e.preventDefault();
-		setFeaturingList([...featuringList, availableArtists]);
-
-		if (featuringList.length < availableArtists.length - 1) {
-			setDisabledList(false);
-		} else {
-			setDisabledList(true);
-		}
-	};
-
-	const deleteFeaturing = (e, index) => {
-		e.preventDefault();
-		const list = [...featuringList];
-		list.splice(index, 1);
-		setFeaturingList(list);
-		if (featuringList.length <= availableArtists.length) {
-			setDisabledList(false);
-		} else {
-			setDisabledList(true);
-		}
-	};
-
-	if (loading) {
-		return <h1>Loading...</h1>;
-	}
-
 	return (
 		<div className="form-container">
 			<h1>Create track</h1>
@@ -217,28 +199,6 @@ const CreateTrack = () => {
 							"artistPhoto",
 						]}
 					/>
-				))}
-				{/* {featuringList.length < availableArtists.length ? (
-					
-				) : null} */}
-				<button onClick={(e) => addFeaturing(e)} disabled={disabledList}>
-					Add featuring artist
-				</button>
-				{featuringList.map((featuring, index) => (
-					<div key={index}>
-						<FormInput
-							register={register}
-							settings={{
-								id: 6,
-								name: "idPrimaryArtist",
-								label: "Primary artist",
-								type: "select",
-								options: availableArtists,
-							}}
-							errors={errors}
-						/>
-						<button onClick={(e) => deleteFeaturing(e)}>Delete featuring</button>
-					</div>
 				))}
 
 				<div className="center-container">
