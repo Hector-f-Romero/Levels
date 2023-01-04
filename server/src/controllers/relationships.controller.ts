@@ -44,4 +44,9 @@ const addAlbumToArtist = async (req: Request, res: Response) => {
 	return res.status(201).json({ msg: `Artist assigned successfully.` });
 };
 
-export { addPlaylistToUser, addAlbumToArtist };
+const addFeaturings = async (req: Request, res: Response) => {
+	console.log(req.body);
+	res.status(200).json({ msg: "ok" });
+};
+
+export { addFeaturings, addPlaylistToUser, addAlbumToArtist };

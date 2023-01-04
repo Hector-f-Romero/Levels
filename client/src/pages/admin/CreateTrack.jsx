@@ -6,7 +6,7 @@ import { getAlbumsRequest } from "../../api/album.api";
 import { getArtistsRequest } from "../../api/artist.api";
 import { getGenresRequest } from "../../api/genre.api";
 import FormInput from "../../components/FormInput";
-import { normalizeSelectValues } from "../../helpers/normalize-data";
+import { normalizeSelectValues, transformDuration } from "../../helpers/normalize-data";
 
 const CreateTrack = () => {
 	const [albums, setAlbums] = useState([]);
@@ -46,21 +46,17 @@ const CreateTrack = () => {
 	};
 
 	const onSubmit = async (data) => {
-		if (data.idGenre) {
-			data.idGenre = Number(data.idGenre);
+		if (data.releaseDate) {
+			data.releaseDate = Number(data.releaseDate);
 		}
 
-		if (data.idAlbum) {
-			data.idAlbum = Number(data.idAlbum);
+		if (data.idAlbum === "") {
+			data.idAlbum = null;
 		}
 
-		if (data.idPrimaryArtist) {
-			data.idPrimaryArtist = Number(data.idPrimaryArtist);
-		}
-
+		data.duration = transformDuration(data.duration);
 		console.log(data);
-
-		// reset();
+		reset();
 		navigate("/create/track/featurings", { state: { data } });
 	};
 
@@ -104,7 +100,6 @@ const CreateTrack = () => {
 					value: 4,
 					message: "Duration should be at least 2 at most 25 chars long.",
 				},
-				valueAsNumber: true,
 			},
 		},
 		{
@@ -123,7 +118,6 @@ const CreateTrack = () => {
 					value: 4,
 					message: "Release Date should be 4 chars long",
 				},
-				valueAsNumber: true,
 			},
 		},
 		{

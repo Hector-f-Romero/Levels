@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Form, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import { getArtistsRequest } from "../../api/artist.api";
+import { createTrackRequest } from "../../api/track.api";
 
 import FormInput from "../../components/FormInput";
 import { normalizeSelectValues } from "../../helpers/normalize-data";
@@ -11,6 +12,7 @@ const CreateFeaturings = () => {
 	const [availableFeaturings, setAvailableFeaturings] = useState([]);
 	const [featuringList, setFeaturingList] = useState([]);
 	const [loading, setLoading] = useState(false);
+	const [trackData, setTrackData] = useState({});
 
 	const { state } = useLocation();
 
@@ -33,7 +35,7 @@ const CreateFeaturings = () => {
 	const loadData = async () => {
 		const resArtists = await getArtistsRequest();
 		const { data } = state;
-		// console.log(data);
+		setTrackData(data);
 		const deletePrimaryArtist = await resArtists.filter((artist) => artist.idArtist !== data.idPrimaryArtist);
 		const featurings = normalizeSelectValues(deletePrimaryArtist);
 		setAvailableFeaturings(featurings);
@@ -62,7 +64,16 @@ const CreateFeaturings = () => {
 	};
 
 	const onSubmit = async (data) => {
-		console.log(data);
+		console.log(trackData);
+
+		// if (!data.existsFeaturings) {
+		// 	reset();
+		// 	console.log("No tiene featuring");
+		// 	return;
+		// }
+		// console.log("tiene featuring");
+		const res = await createTrackRequest({ trackData, featurings: featuringList });
+		console.log(res);
 		// reset();
 		Swal.fire({
 			title: "Track created!",

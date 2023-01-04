@@ -28,4 +28,13 @@ const normalizeSelectValues = (data) => {
 	return normalizedData;
 };
 
-export { normalizeSelectValues };
+const transformDuration = (duration = "") => {
+	const time = duration.split(":");
+	let minutes = Number(time[0]);
+	const seconds = Number(time[1]);
+	minutes *= 60;
+	const durationInSeconds = minutes + seconds;
+	return durationInSeconds;
+};
+
+export { normalizeSelectValues, transformDuration };
