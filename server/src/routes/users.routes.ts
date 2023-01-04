@@ -1,16 +1,16 @@
 import { Router } from "express";
-import { checkSchema } from "express-validator";
+import { check, checkSchema } from "express-validator";
 
 import { createUser, deleteUser, getUser, getUsers, updateUser } from "../controllers/users.controller";
-import { createUserValidation } from "../helpers/user-validations";
+import { createUserValidation, userIdExist } from "../helpers/user-validations";
 import { validateFields } from "../middlewares/validate-fields";
 
 const router = Router();
 
 router.get("/", getUsers);
-router.get("/:id", getUser);
+router.get("/:id", [check("id").not().isEmpty().custom(userIdExist), validateFields], getUser);
 router.post("/", checkSchema(createUserValidation), validateFields, createUser);
-router.patch("/:id", updateUser);
-router.delete("/:id", deleteUser);
+router.patch("/:id", [check("id").not().isEmpty().custom(userIdExist), validateFields], updateUser);
+router.delete("/:id", [check("id").not().isEmpty().custom(userIdExist), validateFields], deleteUser);
 
 export default router;

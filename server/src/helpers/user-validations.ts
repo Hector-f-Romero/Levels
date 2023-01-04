@@ -22,6 +22,13 @@ const emailExist = async (email: string): Promise<void> => {
 	}
 };
 
+const userIdExist = async (id: string): Promise<void> => {
+	const idExist = await User.findOneBy({ idUser: id });
+	if (!idExist) {
+		throw new Error(`Id ${id} don't exists in BD.`);
+	}
+};
+
 const createUserValidation: Schema = {
 	names: {
 		notEmpty: true,
@@ -97,4 +104,4 @@ const createUserValidation: Schema = {
 	},
 };
 
-export { createUserValidation, userNameExist, emailExist };
+export { createUserValidation, userNameExist, userIdExist, emailExist };

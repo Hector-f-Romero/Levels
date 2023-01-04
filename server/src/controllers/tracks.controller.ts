@@ -18,15 +18,12 @@ const createTrack = async (req: Request, res: Response) => {
 				idTrack: trackInsert.raw.insertId,
 			})
 			.getOne();
-		// track?.artists =
 		if (!track) {
 			return res.status(201).json({ msg: "ok" });
 		}
 
 		const idFeaturings = featurings.map((feat: { value: number; text: string }) => feat.value);
-		// console.log(trackInsert.raw.insertId);
-		// console.log(idFeaturings);
-		// console.log(featurings);
+
 		const featuringsData = await AppDataSource.createQueryBuilder()
 			.select("artist")
 			.from(Artist, "artist")
@@ -37,12 +34,6 @@ const createTrack = async (req: Request, res: Response) => {
 		console.log(featuringsData);
 		track.artists = featuringsData;
 		track.save();
-		// await AppDataSource.createQueryBuilder()
-		// 	.relation(Artist, "featuringArtists")
-		// 	.of(track.raw.insertId)
-		// 	.add(featuringsData[0]);
-		// console.log(track);
-
 		res.status(201).json({ msg: "ok" });
 	} catch (error) {
 		handleHttp(res, error, "ERROR_CREATE_GENRE (POST)");
