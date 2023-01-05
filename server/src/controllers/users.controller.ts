@@ -31,7 +31,7 @@ const createUser = async (req: Request, res: Response): Promise<void> => {
 		const { names, lastNames, userName, email, password, userType } = req.body;
 		const salt = await bcrypt.genSalt();
 
-		const user = await userRepository.create({
+		const user = userRepository.create({
 			idUser: nanoid(),
 			names: names,
 			lastNames: lastNames,
@@ -41,6 +41,7 @@ const createUser = async (req: Request, res: Response): Promise<void> => {
 			userType: userType,
 		});
 
+		await userRepository.save(user);
 		res.status(201).json(user);
 	} catch (error) {
 		handleHttp(res, error, "ERROR_CREATE_USER (POST)");
