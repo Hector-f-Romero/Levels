@@ -72,15 +72,15 @@ const CreateAlbum = () => {
 				},
 			},
 		},
-		// {
-		// 	id: 4,
-		// 	name: "coverAlbum",
-		// 	label: "Album cover",
-		// 	type: "file",
-		// 	validationProps: {
-		// 		required: "Album cover cannot be empty.",
-		// 	},
-		// },
+		{
+			id: 4,
+			name: "coverAlbum",
+			label: "Album cover",
+			type: "file",
+			validationProps: {
+				required: "Album cover cannot be empty.",
+			},
+		},
 	];
 
 	const onSubmit = async (data) => {

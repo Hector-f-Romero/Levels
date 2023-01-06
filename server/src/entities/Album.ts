@@ -16,7 +16,7 @@ export class Album extends BaseEntity {
 	@Column("varchar", { length: 25 })
 	label: string;
 
-	@Column("varchar", { length: 25, nullable: true })
+	@Column("varchar", { length: 90, nullable: true })
 	albumCover: string;
 
 	@OneToMany(() => Track, (track) => track.idAlbum)
