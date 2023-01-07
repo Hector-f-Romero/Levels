@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 import { handleHttp } from "../helpers/error.handle";
 import { AppDataSource } from "../config/mysql";
-import { Genre } from "../entities/index.entity";
+import { Genre } from "../entities";
 
 const getGenres = async (req: Request, res: Response): Promise<void> => {
 	try {

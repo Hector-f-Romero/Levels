@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 import { handleHttp } from "../helpers/error.handle";
 import { AppDataSource } from "../config/mysql";
-import { Playlist } from "../entities/index.entity";
+import { Playlist } from "../entities";
 
 const getPlaylists = async (req: Request, res: Response) => {
 	try {

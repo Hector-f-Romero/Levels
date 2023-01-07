@@ -1,4 +1,6 @@
-const setDestinationFolder = function (req: any, file: Express.Multer.File, cb: any) {
+import { Request } from "express";
+
+const setDestinationFolder = function (req: Request, file: Express.Multer.File, cb: any) {
 	let folder = "";
 	switch (req.params.folder) {
 		case "albums":
@@ -17,21 +19,14 @@ const setDestinationFolder = function (req: any, file: Express.Multer.File, cb: 
 	cb(null, `${__dirname}/../uploads/${folder}`);
 };
 
-const applyFileFilters = function (req: any, file: Express.Multer.File, cb: any) {
+const applyFileFilters = function (req: Request, file: Express.Multer.File, cb: any) {
 	let whiteList: string[];
-	console.log(file.mimetype);
 	switch (req.params.folder) {
 		case "albums":
-			console.log("Adentro del case de albums");
 			whiteList = ["image/png", "image/jpeg", "image/jpg", "image/webp"];
 			if (!whiteList.includes(file.mimetype)) {
-				// req.fileValidationError = `File type is not allowed. Allowed formats: ${whiteList}`;
-				// cb(null, false, req.fileValidationError)
-				console.log("No es una imagen");
-				cb(new Error(`File type is not allowed. Allowed formats: ${whiteList}`), false);
-				// cb(null, false);
+				cb(new Error(`File type is not allowed. Allowed formats: ${whiteList}`));
 			} else {
-				console.log("Formato válido");
 				cb(null, true);
 			}
 			break;
@@ -39,15 +34,17 @@ const applyFileFilters = function (req: any, file: Express.Multer.File, cb: any)
 			whiteList = ["image/png", "image/jpeg", "image/jpg", "image/webp"];
 			if (!whiteList.includes(file.mimetype)) {
 				cb(new Error(`File type is not allowed. Allowed formats: ${whiteList}`));
+			} else {
+				cb(null, true);
 			}
-			cb(null, true);
 			break;
 		case "tracks":
 			whiteList = ["audio/mpeg", "audio/x-wav"];
 			if (!whiteList.includes(file.mimetype)) {
 				cb(new Error(`File type is not allowed. Allowed formats: ${whiteList}`));
+			} else {
+				cb(null, true);
 			}
-			cb(null, true);
 			break;
 		default:
 			cb(new Error("Folder not valid."));

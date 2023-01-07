@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Artist, Track } from "../entities/index.entity";
+import { Artist, Track } from "../entities";
 import { handleHttp } from "../helpers/error.handle";
 import { AppDataSource } from "../config/mysql";
 

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import { handleHttp } from "../helpers/error.handle";
-import { Album, Artist, User, Playlist } from "../entities/index.entity";
+import { Album, Artist, User, Playlist } from "../entities";
 
 const addPlaylistToUser = async (req: Request, res: Response) => {
 	try {

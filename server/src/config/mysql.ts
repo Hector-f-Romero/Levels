@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 import "dotenv/config";
 
-import { Album, Artist, Genre, Playlist, Track, User } from "../entities/index.entity";
+import { Album, Artist, Genre, Playlist, Track, User } from "../entities";
 
 const AppDataSource = new DataSource({
 	type: "mysql",

@@ -7,7 +7,12 @@ const verifyJWT = async (req: Request, res: Response, next: NextFunction) => {
 		const jwtByUser = req.headers.authorization || "";
 		const jwt = jwtByUser.split(" ").pop();
 		const resultValidation = verifyJWTLogic(`${jwt}`);
-		console.log(resultValidation);
+		console.log(typeof resultValidation);
+		// console.log(resultValidation);
+		if (!(resultValidation instanceof Object)) {
+			throw new Error("Error occurred in validation of jwt (Not an object");
+		}
+		console.log("Ya pasó el IF");
 		next();
 	} catch (error) {
 		handleHttp(res, error, "ERROR_VERIFY_TOKEN");
