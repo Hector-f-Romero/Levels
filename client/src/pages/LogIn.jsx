@@ -16,7 +16,7 @@ const LogIn = () => {
 		reset,
 		resetField,
 		formState: { errors },
-	} = useForm({ defaultValues: { userName: "Megan708" } });
+	} = useForm({});
 	const { setUserData, setLoadingUserData } = useContext(UserContext);
 	const navigate = useNavigate();
 
@@ -68,8 +68,11 @@ const LogIn = () => {
 		}
 
 		if (res.status === 200) {
-			setUserData(res.data);
+			const { jwt, user } = res.data;
+			setUserData(user);
+			localStorage.setItem("auth", jwt);
 			navigate("/");
+			console.log(localStorage.getItem("auth"));
 			reset();
 		}
 	};

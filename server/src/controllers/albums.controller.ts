@@ -4,6 +4,8 @@ import { handleHttp } from "../helpers/error.handle";
 import { AppDataSource } from "../config/mysql";
 import { Album } from "../entities/Album";
 
+const albumRepository = AppDataSource.getRepository(Album);
+
 const getAlbums = async (req: Request, res: Response): Promise<void> => {
 	try {
 		const albums = await Album.find();
@@ -36,16 +38,10 @@ const getAlbum = async (req: Request, res: Response) => {
 
 const createAlbum = async (req: Request, res: Response): Promise<void> => {
 	try {
-		const { titleAlbum, releaseDate, label, albumCover } = req.body;
-
-		const album = new Album();
-		album.titleAlbum = titleAlbum;
-		album.releaseDate = releaseDate;
-		album.label = label;
-		album.albumCover = albumCover;
-		album.save();
-
-		res.status(201).json({ msg: `Album ${titleAlbum} created successfully .`, album });
+		const { titleAlbum, releaseDate, label } = req.body;
+		const album = albumRepository.create({ titleAlbum, releaseDate, label });
+		await albumRepository.save(album);
+		res.status(201).json(album);
 	} catch (error) {
 		handleHttp(res, error, "ERROR_CREATE_ALBUM (POST)");
 	}

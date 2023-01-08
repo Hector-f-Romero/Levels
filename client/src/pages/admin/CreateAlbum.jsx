@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { createAlbumRequest } from "../../api/album.api";
+import { uploadFilerRequest } from "../../api/upload.api";
 
 import FormInput from "../../components/FormInput";
 

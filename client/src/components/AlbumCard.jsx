@@ -5,9 +5,8 @@ const AlbumCard = ({ dataInfo }) => {
 	return (
 		<div className="album-card">
 			<div className="album-cover">
-				<img src="" alt="img de album" />
+				<img src={`http://localhost:4000/api/uploads/albums/${dataInfo.idAlbum}`} alt="img de album" />
 			</div>
-			{/* <h2>Cuentos chinos para niños del Japón</h2> */}
 			<h2>{dataInfo.titleAlbum}</h2>
 			{dataInfo.artists !== undefined ? (
 				dataInfo.artists.map((artist) => <h3 key={artist.idArtist}>{artist.stageName}</h3>)
