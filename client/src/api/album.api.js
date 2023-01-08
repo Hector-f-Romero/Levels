@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const instance = axios.create({ baseURL: "http://localhost:4000/api/albums", headers: localStorage.getItem("auth") });
+const instance = axios.create({ baseURL: "http://localhost:4000/api/albums" });
 
 const uploadEndpoint = "http://localhost:4000/api/uploads";
 
@@ -26,11 +26,9 @@ const createAlbumRequest = async (data) => {
 	try {
 		const { coverAlbum, ...dataAlbum } = data;
 		const res = await instance.post("/", dataAlbum);
+
 		const formData = new FormData();
 		formData.append("coverAlbum", data.coverAlbum[0]);
-		console.log(res.data);
-		console.log(coverAlbum[0]);
-		console.log(formData);
 		const { idAlbum } = res.data;
 		const resUploadAlbum = await axios.post(`${uploadEndpoint}/albums/${idAlbum}`, formData);
 		// {
