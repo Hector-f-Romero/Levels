@@ -1,7 +1,6 @@
 import React from "react";
 
 const AlbumCard = ({ dataInfo }) => {
-	console.log(dataInfo.artists);
 	return (
 		<div className="album-card">
 			<div className="album-cover">

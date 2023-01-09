@@ -20,7 +20,7 @@ const uploadFileMiddleware = (fieldForm: string) => {
 	return (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const upload = multer({
-				storage,
+				storage: multer.memoryStorage(),
 				fileFilter: applyFileFilters,
 			}).single(fieldForm);
 

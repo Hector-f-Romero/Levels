@@ -25,17 +25,22 @@ const getAlbumsRequest = async () => {
 const createAlbumRequest = async (data) => {
 	try {
 		const { coverAlbum, ...dataAlbum } = data;
-		const res = await instance.post("/", dataAlbum);
+		const resAlbum = await instance.post("/", dataAlbum);
 
+		// if (coverAlbum.length === 0) {
+		// 	return resAlbum.data;
+		// }
+
+		const { idAlbum } = resAlbum.data;
+		console.log(idAlbum);
 		const formData = new FormData();
 		formData.append("coverAlbum", data.coverAlbum[0]);
-		const { idAlbum } = res.data;
 		const resUploadAlbum = await axios.post(`${uploadEndpoint}/albums/${idAlbum}`, formData);
 		// {
 		// 	headers: { "Content-Type": "multipart/form-data" },
 		// });
-		console.log(resUploadAlbum);
-		return res.data;
+		const allResponses = { resAlbum: resAlbum.data, resUploadAlbum: resUploadAlbum.data };
+		return allResponses;
 	} catch (e) {
 		return e.response;
 	}

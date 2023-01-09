@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
+import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
-import { createAlbumRequest } from "../../api/album.api";
-import { uploadFilerRequest } from "../../api/upload.api";
+import { useNavigate } from "react-router-dom";
+import withReactContent from "sweetalert2-react-content";
 
+import { createAlbumRequest } from "../../api/album.api";
 import FormInput from "../../components/FormInput";
+
+const MySwal = withReactContent(Swal);
 
 const CreateAlbum = () => {
 	const {
@@ -11,9 +15,29 @@ const CreateAlbum = () => {
 		handleSubmit,
 		watch,
 		reset,
-		resetField,
 		formState: { errors },
 	} = useForm();
+
+	const navigate = useNavigate();
+
+	const onSubmit = async (data) => {
+		const res = await createAlbumRequest(data);
+		MySwal.fire({
+			title: "Album created!",
+			text: `Album ${data.titleAlbum} was created successfully.`,
+			icon: "success",
+			confirmButtonText: "Get it, show me",
+			color: "#FFF",
+			background: "#303030",
+			confirmButtonColor: "#6d6d6d",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				navigate("/albums");
+			}
+		});
+		console.log(res);
+		// reset();
+	};
 
 	const inputs = [
 		{
@@ -83,12 +107,6 @@ const CreateAlbum = () => {
 			},
 		},
 	];
-
-	const onSubmit = async (data) => {
-		const res = await createAlbumRequest(data);
-		console.log(res);
-		reset();
-	};
 
 	return (
 		<div className="form-container">

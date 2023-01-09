@@ -9,7 +9,7 @@ const router: Router = Router();
 router.get("/:folder/:id", [fileIdAndFolderExists], getFile);
 // router.post("/:folder/:id", , uploadFile);
 // router.post("/:folder/:id", upload.single("file"), uploadFile);
-router.post("/:folder/:id", [uploadFileMiddleware("coverAlbum"), fileExists, fileIdAndFolderExists], uploadFile);
+router.post("/:folder/:id", [uploadFileMiddleware("coverAlbum"), fileIdAndFolderExists], uploadFile);
 router.put("/:folder/:id", [uploadFileMiddleware("file"), fileExists, fileIdAndFolderExists], putFile);
 router.delete("/:folder/:id", [verifyJWT, isAdminRole, fileIdAndFolderExists], deleteFile);
 

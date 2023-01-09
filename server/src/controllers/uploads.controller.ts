@@ -1,5 +1,6 @@
 import path from "path";
-import { existsSync, unlink } from "node:fs";
+import { writeFileSync, existsSync, unlink } from "node:fs";
+import sharp from "sharp";
 
 import { Request, Response } from "express";
 import { AppDataSource } from "../config/mysql";
@@ -36,7 +37,13 @@ const getFile = async (req: Request, res: Response): Promise<void> => {
 		if (existsSync(pathFile)) {
 			res.sendFile(pathFile);
 		} else {
-			pathFile = path.join(__dirname, `../uploads/Not-found.jpg`);
+			if (folder === "albums") {
+				pathFile = path.join(__dirname, `../uploads/albums/Not-album.jpg`);
+			} else if (folder === "artists") {
+				pathFile = path.join(__dirname, `../uploads/artists/Not-artist.jpg`);
+			} else {
+				console.log("Error not validate");
+			}
 			res.sendFile(pathFile);
 		}
 	} catch (error) {
@@ -46,15 +53,17 @@ const getFile = async (req: Request, res: Response): Promise<void> => {
 
 const uploadFile = async (req: Request, res: Response) => {
 	try {
-		if (!req.file) {
-			res.status(404).json({ msg: `Don't exists file or files into request.` });
-		}
-
 		const entity = res.locals.entity;
+		const img = req.file?.buffer;
+		let storagePath = "";
+		const resizedImageBuffer = await sharp(img).resize(240, 240, { fit: "fill" }).toFormat("jpg").toBuffer();
+		console.log(resizedImageBuffer);
 		switch (req.params.folder) {
 			case "albums":
 				entity.albumCover = `${storageLocation}/albums/${req.params.id}`;
 				await albumRepository.save(entity);
+				storagePath = path.join(__dirname, `../uploads/albums/${req.params.id}`);
+				writeFileSync(`${storagePath}.jpg`, resizedImageBuffer);
 				break;
 			case "artists": {
 				entity.artistPhoto = `${storageLocation}/artists/${req.params.id}`;
@@ -140,5 +149,4 @@ const deleteFile = async (req: Request, res: Response) => {
 		handleHttp(res, error, "ERROR_DELETE_FILE (DELETE)");
 	}
 };
-
 export { getFile, uploadFile, putFile, deleteFile };
