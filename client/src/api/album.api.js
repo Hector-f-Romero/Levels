@@ -2,7 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({ baseURL: "http://localhost:4000/api/albums" });
 
-const uploadEndpoint = "http://localhost:4000/api/uploads";
+const uploadAlbumCoverEndpoint = "http://localhost:4000/api/uploads/albums";
 
 const getAlbumsWithArtistRequest = async () => {
 	try {
@@ -24,18 +24,13 @@ const getAlbumsRequest = async () => {
 
 const createAlbumRequest = async (data) => {
 	try {
-		const { coverAlbum, ...dataAlbum } = data;
+		const { albumCover, ...dataAlbum } = data;
 		const resAlbum = await instance.post("/", dataAlbum);
 
-		// if (coverAlbum.length === 0) {
-		// 	return resAlbum.data;
-		// }
-
 		const { idAlbum } = resAlbum.data;
-		console.log(idAlbum);
 		const formData = new FormData();
-		formData.append("coverAlbum", data.coverAlbum[0]);
-		const resUploadAlbum = await axios.post(`${uploadEndpoint}/albums/${idAlbum}`, formData);
+		formData.append("albumCover", data.albumCover[0]);
+		const resUploadAlbum = await axios.post(`${uploadAlbumCoverEndpoint}/${idAlbum}`, formData);
 		// {
 		// 	headers: { "Content-Type": "multipart/form-data" },
 		// });

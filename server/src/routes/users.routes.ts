@@ -2,7 +2,7 @@ import { Router } from "express";
 import { check, checkSchema } from "express-validator";
 
 import { createUser, deleteUser, getUser, getUsers, updateUser } from "../controllers/users.controller";
-import { createUserValidation, userIdExist } from "../helpers/user-validations";
+import { createUserValidation, userIdExist } from "../validators/user-validations";
 import { validateFields } from "../middlewares/validate-fields";
 import { verifyJWT } from "../middlewares/verify-jwt";
 

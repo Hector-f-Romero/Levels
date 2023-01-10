@@ -45,11 +45,5 @@ const fileIdAndFolderExists = async (req: Request, res: Response, next: NextFunc
  * @param next
  * @returns
  */
-const fileExists = (req: Request, res: Response, next: NextFunction) => {
-	if (!req.file) {
-		return res.status(404).json({ msg: `Don't exists file or files into request.` });
-	}
-	next();
-};
 
-export { fileExists, fileIdAndFolderExists };
+export { fileIdAndFolderExists };

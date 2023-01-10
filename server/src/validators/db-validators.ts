@@ -1,5 +1,5 @@
 import { AppDataSource } from "../config/mysql";
-import { Album } from "../entities/Album";
+import { Album } from "../entities/";
 
 const albumRepository = AppDataSource.getRepository(Album);
 

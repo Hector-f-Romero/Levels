@@ -21,12 +21,15 @@ const setDestinationFolder = function (req: Request, file: Express.Multer.File, 
 
 const applyFileFilters = function (req: Request, file: Express.Multer.File, cb: any) {
 	let whiteList: string[];
+	console.log(file);
 	switch (req.params.folder) {
 		case "albums":
 			whiteList = ["image/png", "image/jpeg", "image/jpg", "image/webp"];
 			if (!whiteList.includes(file.mimetype)) {
+				console.log("No pasó el filtro");
 				cb(new Error(`File type is not allowed. Allowed formats: ${whiteList}`));
 			} else {
+				console.log("Pasó el filtro");
 				cb(null, true);
 			}
 			break;

@@ -99,7 +99,7 @@ const CreateAlbum = () => {
 		},
 		{
 			id: 4,
-			name: "coverAlbum",
+			name: "albumCover",
 			label: "Album cover",
 			type: "file",
 			validationProps: {
