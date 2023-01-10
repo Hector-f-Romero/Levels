@@ -4,6 +4,8 @@ import { handleHttp } from "../helpers/error.handle";
 import { AppDataSource } from "../config/mysql";
 import { Artist } from "../entities/Artist";
 
+const artistRepository = AppDataSource.getRepository(Artist);
+
 const getArtists = async (req: Request, res: Response): Promise<void> => {
 	try {
 		const artists = await Artist.find();
@@ -32,16 +34,17 @@ const getArtist = async (req: Request, res: Response) => {
 
 const createArtist = async (req: Request, res: Response): Promise<void> => {
 	try {
-		const { namesArtist, lastNamesArtist, stageName, typeArtist, bornDate, countryOrigin, artistPhoto } = req.body;
-		const artist = new Artist();
-		artist.namesArtist = namesArtist;
-		artist.lastNamesArtist = lastNamesArtist;
-		artist.stageName = stageName;
-		artist.typeArtist = typeArtist;
-		artist.bornDate = bornDate;
-		artist.countryOrigin = countryOrigin;
-		artist.artistPhoto = artistPhoto;
-		artist.save();
+		const { namesArtist, lastNamesArtist, stageName, typeArtist, bornDate, countryOrigin } = req.body;
+		const artist = artistRepository.create({
+			namesArtist,
+			lastNamesArtist,
+			stageName,
+			typeArtist,
+			bornDate,
+			countryOrigin,
+		});
+
+		await artistRepository.save(artist);
 
 		res.status(201).json(artist);
 	} catch (error) {

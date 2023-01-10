@@ -1,18 +1,20 @@
 import { Router } from "express";
-import { check } from "express-validator";
-import multer from "multer";
+
 import {
 	deleteCoverAlbum,
 	getAlbumCover,
 	putAlbumCover,
 	uploadAlbumCover,
-} from "../controllers/uploads.images.controller";
-import { validateFields } from "../middlewares/validate-fields";
-import { albumIdExist } from "../validators/db-validators";
+} from "../controllers/uploads.albumCover.controller";
+import {
+	deleteArtistPhoto,
+	getArtistPhoto,
+	putArtistPhoto,
+	uploadArtistPhoto,
+} from "../controllers/uploads.artistPhoto.controller";
+import { deleteTrackFile, getTrackFile, putTrackFile, uploadTrackFile } from "../controllers/uploads.tracks.controller";
 
-const upload = multer({
-	storage: multer.memoryStorage(),
-});
+import { uploadImages, uploadTracks } from "../helpers/multer.handle";
 
 const router: Router = Router();
 // router.get("/:folder/:id", [fileIdAndFolderExists], getFile);
@@ -20,9 +22,19 @@ const router: Router = Router();
 // router.post("/:folder/:id", upload.single("file"), uploadFile);
 // router.get("/albums/:id", [uploadFileMiddleware("coverAlbum"), fileIdAndFolderExists], uploadFile);
 router.get("/albums/:id", getAlbumCover);
-router.post("/albums/:id", [upload.single("albumCover")], uploadAlbumCover);
-router.put("/albums/:id", [upload.single("albumCover")], putAlbumCover);
+router.post("/albums/:id", [uploadImages.single("albumCover")], uploadAlbumCover);
+router.put("/albums/:id", [uploadImages.single("albumCover")], putAlbumCover);
 router.delete("/albums/:id", deleteCoverAlbum);
+
+router.get("/artists/:id", getArtistPhoto);
+router.post("/artists/:id", [uploadImages.single("artistPhoto")], uploadArtistPhoto);
+router.put("/artists/:id", [uploadImages.single("artistPhoto")], putArtistPhoto);
+router.delete("/artists/:id", deleteArtistPhoto);
+
+router.get("/tracks/:id", getTrackFile);
+router.post("/tracks/:id", [uploadTracks.single("pathTrack")], uploadTrackFile);
+router.put("/tracks/:id", [uploadTracks.single("pathTrack")], putTrackFile);
+router.delete("/tracks/:id", deleteTrackFile);
 // router.put("/albums/:id", [uploadImageMiddleware("coverAlbum"), fileIdAndFolderExists], uploadFile);
 // router.delete("/albums/:id", [uploadFileMiddleware("coverAlbum"), fileIdAndFolderExists], uploadFile);
 // router.put("/:folder/:id", [uploadFileMiddleware("file"), fileExists, fileIdAndFolderExists], putFile);

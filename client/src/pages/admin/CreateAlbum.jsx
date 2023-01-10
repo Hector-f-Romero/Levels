@@ -36,7 +36,7 @@ const CreateAlbum = () => {
 			}
 		});
 		console.log(res);
-		// reset();
+		reset();
 	};
 
 	const inputs = [

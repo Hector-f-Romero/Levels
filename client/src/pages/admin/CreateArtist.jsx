@@ -156,8 +156,6 @@ const CreateArtist = () => {
 			delete data.formedYear;
 			data.bornDate = `${year}-01-01`;
 		}
-		// TODO: delete temporairily prop 'artistPhoto'. Do the upload files.
-		delete data.artistPhoto;
 		const res = await createArtistRequest(data);
 		console.log(res);
 		reset();

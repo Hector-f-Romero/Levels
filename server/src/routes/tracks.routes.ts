@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { createTrack } from "../controllers/tracks.controller";
+import { createTrack, getTracks } from "../controllers/tracks.controller";
 
 const router = Router();
 
-// router.get("/tracks", );
+router.get("/", getTracks);
 router.post("/", createTrack);
 
 export default router;

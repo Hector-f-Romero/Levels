@@ -30,7 +30,7 @@ export class Artist extends BaseEntity {
 	@Column("varchar", { length: 25 })
 	countryOrigin: string;
 
-	@Column("varchar", { length: 25, nullable: true })
+	@Column("varchar", { length: 90, nullable: true })
 	artistPhoto: string;
 
 	@OneToMany(() => Track, (track) => track.idPrimaryArtist)

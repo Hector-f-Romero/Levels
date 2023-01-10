@@ -3,8 +3,24 @@ import { Artist, Track } from "../entities";
 import { handleHttp } from "../helpers/error.handle";
 import { AppDataSource } from "../config/mysql";
 
+const trackRepository = AppDataSource.getRepository(Track);
+
 const getLastTracks = (req: Request, res: Response) => {
 	res.status(200).json({ msg: "Últimas 10 canciones" });
+};
+
+const getTracks = (req: Request, res: Response) => {
+	try {
+		const tracks = trackRepository.find();
+
+		if (!tracks) {
+			res.status(404).json({ msg: "Not exist tracks in BD." });
+		}
+
+		res.status(200).json(tracks);
+	} catch (error) {
+		handleHttp(res, error, "ERROR_GET_TASKS");
+	}
 };
 
 const createTrack = async (req: Request, res: Response) => {
@@ -40,4 +56,4 @@ const createTrack = async (req: Request, res: Response) => {
 	}
 };
 
-export { getLastTracks, createTrack };
+export { getTracks, getLastTracks, createTrack };
