@@ -55,7 +55,7 @@ const CreateAlbum = () => {
 			}
 		});
 		console.log(res);
-		// reset();
+		reset();
 	};
 
 	const inputs = [
@@ -77,7 +77,6 @@ const CreateAlbum = () => {
 				},
 			},
 		},
-
 		{
 			id: 2,
 			name: "releaseDate",
@@ -121,6 +120,8 @@ const CreateAlbum = () => {
 			name: "albumCover",
 			label: "Album cover",
 			type: "file",
+			accept: "image/*",
+			multiple: false,
 			validationProps: {
 				required: "Album cover cannot be empty.",
 			},

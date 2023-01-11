@@ -19,7 +19,7 @@ const Albums = () => {
 
 	return (
 		<>
-			<h1>Albums view</h1>
+			<h1>Recent albums</h1>
 			<div className="albums-container">
 				{data.map((album) => (
 					<AlbumCard key={album.idAlbum} dataInfo={album} />

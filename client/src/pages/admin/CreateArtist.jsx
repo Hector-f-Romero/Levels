@@ -1,7 +1,13 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
 import { createArtistRequest } from "../../api/artist.api";
 import FormInput from "../../components/FormInput";
+
+const MySwal = withReactContent(Swal);
 
 const CreateArtist = () => {
 	const {
@@ -12,6 +18,8 @@ const CreateArtist = () => {
 		resetField,
 		formState: { errors },
 	} = useForm({ defaultValues: { typeArtist: "Artist" } });
+
+	const navigate = useNavigate();
 
 	const inputs = [
 		{
@@ -158,6 +166,19 @@ const CreateArtist = () => {
 		}
 		const res = await createArtistRequest(data);
 		console.log(res);
+		MySwal.fire({
+			title: "Artist/Group created!",
+			text: `Artist/Group ${data.stageName} was created successfully.`,
+			icon: "success",
+			confirmButtonText: "Get it, show me",
+			color: "#FFF",
+			background: "#303030",
+			confirmButtonColor: "#6d6d6d",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				navigate("/albums");
+			}
+		});
 		reset();
 	};
 

@@ -122,3 +122,42 @@ input:invalid[focused="true"] ~ span {
 	align-items: center;
 	justify-content: center;
 }
+
+.img-preview {
+	width: 150px;
+	height: 150px;
+	border-radius: 10px;
+	display: block;
+	margin: auto;
+	margin: 1.4em auto;
+}
+
+/* .upload-button {
+	width: 100%;
+	display: block;
+	font-size: 1.4rem;
+	text-align: center;
+	font-weight: 500;
+	color: #b3b3b3;
+	position: absolute;
+	top: 32%;
+	cursor: pointer;
+	padding: 0.72em;
+	background-color: #303030;
+	border-radius: 7px;
+	pointer-events: none;
+} */
+
+/* .my-input-file {
+	padding: 1.5em;
+} */
+
+/* input[type="file"]::file-selector-button {
+	visibility: hidden;
+	color: transparent;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+	visibility: hidden;
+	color: transparent;
+} */
