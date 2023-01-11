@@ -107,15 +107,13 @@ const deleteCoverAlbum = async (req: Request, res: Response) => {
 			return;
 		}
 
-		if (album.albumCover === `${storageLocationURL}/albums/Not-album-image.jpg`) {
-			res.status(200).json({ msg: `${album.titleAlbum} doesn't have album cover.` });
-			return;
+		const pathAlbumCover = path.join(__dirname, `../uploads/albums/${id}.jpg`);
+		if (existsSync(pathAlbumCover)) {
+			unlinkSync(pathAlbumCover);
+		} else {
+			console.log("Don't find the pathAlbumCover");
 		}
 
-		const pathAlbumCover = path.join(__dirname, `../uploads/albums/${id}.jpg`);
-
-		unlinkSync(pathAlbumCover);
-		album.albumCover = `${storageLocationURL}/albums/Not-album-image.jpg`;
 		await albumRepository.save(album);
 		res.status(204).json();
 	} catch (error) {

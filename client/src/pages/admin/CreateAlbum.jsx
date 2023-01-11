@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -6,10 +6,16 @@ import withReactContent from "sweetalert2-react-content";
 
 import { createAlbumRequest } from "../../api/album.api";
 import FormInput from "../../components/FormInput";
+import { useState } from "react";
+import { getArtistsRequest } from "../../api/artist.api";
+import { normalizeSelectValues } from "../../helpers/normalize-data";
 
 const MySwal = withReactContent(Swal);
 
 const CreateAlbum = () => {
+	const [artists, setArtists] = useState([]);
+	const [loading, setLoading] = useState(false);
+
 	const {
 		register,
 		handleSubmit,
@@ -19,6 +25,19 @@ const CreateAlbum = () => {
 	} = useForm();
 
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		setLoading(true);
+		loadData();
+	}, []);
+
+	const loadData = async () => {
+		const resArtists = await getArtistsRequest();
+		console.log(resArtists);
+		setArtists(normalizeSelectValues(resArtists));
+		reset();
+		setLoading(false);
+	};
 
 	const onSubmit = async (data) => {
 		const res = await createAlbumRequest(data);
@@ -36,7 +55,7 @@ const CreateAlbum = () => {
 			}
 		});
 		console.log(res);
-		reset();
+		// reset();
 	};
 
 	const inputs = [
@@ -105,6 +124,13 @@ const CreateAlbum = () => {
 			validationProps: {
 				required: "Album cover cannot be empty.",
 			},
+		},
+		{
+			id: 5,
+			name: "ownedBy",
+			label: "Owned by",
+			type: "select",
+			options: artists,
 		},
 	];
 

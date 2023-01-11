@@ -24,7 +24,8 @@ const getAlbumsRequest = async () => {
 
 const createAlbumRequest = async (data) => {
 	try {
-		const { albumCover, ...dataAlbum } = data;
+		console.log(data);
+		const { albumCover, ownedBy, ...dataAlbum } = data;
 		const resAlbum = await instance.post("/", dataAlbum);
 
 		const { idAlbum } = resAlbum.data;
@@ -34,7 +35,17 @@ const createAlbumRequest = async (data) => {
 		// {
 		// 	headers: { "Content-Type": "multipart/form-data" },
 		// });
-		const allResponses = { resAlbum: resAlbum.data, resUploadAlbum: resUploadAlbum.data };
+
+		const resLinkArtistToAlbum = await axios.post("http://localhost:4000/api/relationships/link/album/artists", {
+			idArtist: ownedBy,
+			idAlbum,
+		});
+
+		const allResponses = {
+			resAlbum: resAlbum.data,
+			resUploadAlbum: resUploadAlbum.data,
+			resLink: resLinkArtistToAlbum.data,
+		};
 		return allResponses;
 	} catch (e) {
 		return e.response;

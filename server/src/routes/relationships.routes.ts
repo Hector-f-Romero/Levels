@@ -5,6 +5,6 @@ const router: Router = Router();
 
 router.post("/playlists/users", addPlaylistToUser);
 // router.post("/track/featurings", addFeaturings);
-router.post("/albums/artists", addAlbumToArtist);
+router.post("/link/album/artists", addAlbumToArtist);
 
 export default router;

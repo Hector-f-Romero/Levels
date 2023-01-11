@@ -2,6 +2,10 @@ import { Request, Response } from "express";
 
 import { handleHttp } from "../helpers/error.handle";
 import { Album, Artist, User, Playlist } from "../entities";
+import { AppDataSource } from "../config/mysql";
+
+const albumRepository = AppDataSource.getRepository(Album);
+const artistRepository = AppDataSource.getRepository(Artist);
 
 const addPlaylistToUser = async (req: Request, res: Response) => {
 	try {
@@ -25,23 +29,26 @@ const addPlaylistToUser = async (req: Request, res: Response) => {
 	}
 };
 
-const addAlbumToArtist = async (req: Request, res: Response) => {
+const addAlbumToArtist = async (req: Request, res: Response): Promise<void> => {
 	const { idAlbum, idArtist } = req.body;
-	const album = await Album.findOneBy({ idAlbum });
+	const album = await albumRepository.findOneBy({ idAlbum });
 
 	if (!album) {
-		return res.status(404).json({ msg: `Don't exist album in BD with the id ${idAlbum}` });
+		res.status(404).json({ msg: `Don't exist album in BD with the id ${idAlbum}` });
+		return;
 	}
 
-	const artist = await Artist.findOneBy({ idArtist });
+	const artist = await artistRepository.findOneBy({ idArtist });
 
 	if (!artist) {
-		return res.status(404).json({ msg: `Don't exist artist in BD with the id ${idArtist}` });
+		res.status(404).json({ msg: `Don't exist artist in BD with the id ${idArtist}` });
+		return;
 	}
+
 	album.artists = [artist];
 	console.log(album.artists);
-	await album.save();
-	return res.status(201).json({ msg: `Artist assigned successfully.` });
+	await albumRepository.save(album);
+	res.status(201).json({ msg: `Artist assigned successfully.` });
 };
 
 const addFeaturings = async (req: Request, res: Response) => {
