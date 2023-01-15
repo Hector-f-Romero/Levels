@@ -22,6 +22,15 @@ const getAlbumsRequest = async () => {
 	}
 };
 
+const getAlbumWithTrackRequest = async (id) => {
+	try {
+		const res = await axios.get(`http://localhost:4000/api/relationships/albums/info/${id}`);
+		return res.data[0];
+	} catch (e) {
+		return e.response;
+	}
+};
+
 const createAlbumRequest = async (data) => {
 	try {
 		console.log(data);
@@ -51,4 +60,4 @@ const createAlbumRequest = async (data) => {
 		return e.response;
 	}
 };
-export { getAlbumsRequest, getAlbumsWithArtistRequest, createAlbumRequest };
+export { getAlbumsRequest, getAlbumWithTrackRequest, getAlbumsWithArtistRequest, createAlbumRequest };

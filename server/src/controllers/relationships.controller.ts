@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 
 import { handleHttp } from "../helpers/error.handle";
-import { Album, Artist, User, Playlist } from "../entities";
+import { Album, Artist, User, Playlist, Track } from "../entities";
 import { AppDataSource } from "../config/mysql";
 
 const albumRepository = AppDataSource.getRepository(Album);
 const artistRepository = AppDataSource.getRepository(Artist);
+const trackRepository = AppDataSource.getRepository(Track);
 
 const addPlaylistToUser = async (req: Request, res: Response) => {
 	try {
@@ -46,7 +47,6 @@ const addAlbumToArtist = async (req: Request, res: Response): Promise<void> => {
 	}
 
 	album.artists = [artist];
-	console.log(album.artists);
 	await albumRepository.save(album);
 	res.status(201).json({ msg: `Artist assigned successfully.` });
 };
@@ -56,4 +56,38 @@ const addFeaturings = async (req: Request, res: Response) => {
 	res.status(200).json({ msg: "ok" });
 };
 
-export { addFeaturings, addPlaylistToUser, addAlbumToArtist };
+const getAlbumWithTracks = async (req: Request, res: Response) => {
+	try {
+		const { id } = req.params;
+		const selectColumns = [
+			"album.albumCover",
+			"album.idAlbum",
+			"album.label",
+			"album.releaseDate",
+			"album.titleAlbum",
+			"albumArt.stageName",
+			"albumArt.idArtist",
+			"track.duration",
+			"track.idTrack",
+			"track.pathTrack",
+			"track.releaseDate",
+			"track.titleTrack",
+			"artists.idArtist",
+			"artists.stageName",
+		];
+
+		const albumTracks = await albumRepository
+			.createQueryBuilder("album")
+			.innerJoinAndSelect("album.tracks", "track")
+			.leftJoinAndSelect("track.artists", "artists")
+			.leftJoinAndSelect("album.artists", "albumArt")
+			.select(selectColumns)
+			.where("album.idAlbum = :idAlbum", { idAlbum: Number(id) })
+			.getMany();
+		res.status(200).json(albumTracks);
+	} catch (error) {
+		handleHttp(res, error, "ERROR_GET_ALL_INFO");
+	}
+};
+
+export { addFeaturings, addPlaylistToUser, addAlbumToArtist, getAlbumWithTracks };

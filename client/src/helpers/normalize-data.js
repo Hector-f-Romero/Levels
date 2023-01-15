@@ -37,4 +37,15 @@ const transformDuration = (duration = "") => {
 	return durationInSeconds;
 };
 
-export { normalizeSelectValues, transformDuration };
+const transformDurationToMinutes = (duration) => {
+	const minutes = Math.trunc(duration / 60);
+	let seconds = duration % 60;
+
+	if (`${seconds}`.length === 1) {
+		seconds = `0${seconds}`;
+	}
+
+	return `${minutes}:${seconds}`;
+};
+
+export { normalizeSelectValues, transformDuration, transformDurationToMinutes };

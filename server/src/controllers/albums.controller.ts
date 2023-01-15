@@ -8,7 +8,7 @@ const albumRepository = AppDataSource.getRepository(Album);
 
 const getAlbums = async (req: Request, res: Response): Promise<void> => {
 	try {
-		const albums = await Album.find();
+		const albums = await albumRepository.find();
 		res.status(200).json(albums);
 	} catch (error) {
 		handleHttp(res, error, "ERROR_GET_ALBUMS (GET)");
@@ -18,19 +18,13 @@ const getAlbums = async (req: Request, res: Response): Promise<void> => {
 const getAlbum = async (req: Request, res: Response) => {
 	try {
 		console.log(req.params.id);
-		const album = await Album.findOne({
-			where: [
-				{
-					idAlbum: Number(req.params.id),
-				},
-			],
-		});
+		const album = await albumRepository.findOneBy({ idAlbum: Number(req.params.id) });
 
 		if (!album) {
 			return res.status(404).json({ msg: `Don't exist users in BD with the id ${req.params.id}` });
 		}
 
-		return res.status(200).json({ album });
+		return res.status(200).json(album);
 	} catch (error) {
 		return res.status(500).json(error);
 	}

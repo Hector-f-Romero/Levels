@@ -64,15 +64,13 @@ const CreateFeaturings = () => {
 	};
 
 	const onSubmit = async (data) => {
-		console.log(trackData);
+		let idFeaturings = [];
 
-		// if (!data.existsFeaturings) {
-		// 	reset();
-		// 	console.log("No tiene featuring");
-		// 	return;
-		// }
-		// console.log("tiene featuring");
-		const res = await createTrackRequest({ trackData, featurings: featuringList });
+		if (featuringList) {
+			idFeaturings = featuringList.map((ft) => ft.value);
+		}
+
+		const res = await createTrackRequest({ trackData, featurings: idFeaturings });
 		console.log(res);
 		// reset();
 		Swal.fire({

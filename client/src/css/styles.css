@@ -100,7 +100,7 @@ header {
 }
 
 .albums-container {
-	background-color: rgb(30, 156, 108);
+	/* background-color: rgb(30, 156, 108); */
 	margin: 0 5%;
 	display: flex;
 	align-items: center;
@@ -202,4 +202,80 @@ header {
 
 .profile-table td:nth-child(2) {
 	color: var(--secondaryText);
+}
+
+/* ALBUM INFO STYLES*/
+.title-link {
+	text-decoration: none;
+	color: var(--primartyTitle);
+	font-size: 1.5rem;
+	font-weight: 700;
+}
+
+.card-data-container {
+	background-color: rgb(137, 70, 70);
+	max-width: 80vw;
+	display: grid;
+	/* grid-template-rows: [row1-start] 700px [row1-end row2-start] 500px [row2-end];
+	grid-template-columns: auto 50px auto; */
+	/* grid-template: [row1] "Img albumInfo" 500px [row1-end] */
+	/* grid-template-columns: 240px 1fr;
+	
+	/* width: 600px; */
+	grid-template-rows: 400px 1fr;
+	margin: 7% auto;
+	/* margin-left: auto;
+	margin-right: auto; */
+}
+
+.card-data-container img {
+	max-width: 240px;
+	border-radius: 5px;
+	/* width: 100%; */
+}
+
+.card-data-info {
+	background-color: rgb(26, 156, 102);
+	padding: 1em;
+}
+
+.track-list {
+	/* width: fit-content; */
+	/* grid-column-start: 1;
+	grid-row-start: 2;
+	grid-row-end: 2; */
+	background-color: rgb(17, 93, 164);
+}
+
+/* .track-element {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	cursor: pointer;
+	width: 100%;
+	background-color: rgb(44, 147, 106);
+} */
+
+.track-element {
+	font-weight: 500;
+	display: grid;
+	align-items: center;
+	grid-template-columns: [index] 1fr [first] 4fr [releaseDate] 1fr [last] minmax(120px, 1fr);
+}
+
+.titleTrack {
+	/* background-color: rgb(112, 89, 89); */
+}
+
+.titleTrack h3 {
+	color: var(--primaryLightColor);
+	font-size: 1rem;
+	font-weight: 300;
+}
+
+.titleTrack span {
+	color: var(--secondaryText);
+	font-size: 1rem;
+	font-weight: 300;
 }
