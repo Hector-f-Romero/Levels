@@ -5,7 +5,7 @@ import TrackCard from "../components/TrackCard";
 import TrackElement from "../components/TrackElement";
 
 const AlbumInfo = () => {
-	const [albumData, setAlbumData] = useState({ tracks: [] });
+	const [albumData, setAlbumData] = useState({ artists: [], tracks: [] });
 	const [loading, setLoading] = useState(false);
 
 	const { id } = useParams();
@@ -28,10 +28,18 @@ const AlbumInfo = () => {
 
 	return (
 		<div className="card-data-container">
-			<img src={albumData.albumCover} alt="" />
+			<div className="card-data-cover">
+				<img src={albumData.albumCover} alt="" />
+			</div>
+
 			<div className="card-data-info">
 				<h1>{albumData.titleAlbum}</h1>
-				<h2>Artist name</h2>
+				<h2>
+					Artist:
+					{albumData.artists.map((art) => (
+						<span key={art.idArtist}>{art.stageName}</span>
+					))}
+				</h2>
 				<h2>Label: {albumData.label}</h2>
 				<h3>Release date: {albumData.releaseDate}</h3>
 			</div>

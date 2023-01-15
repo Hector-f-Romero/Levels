@@ -7,7 +7,7 @@ const TrackElement = (props) => {
 
 	const handlePlayTrack = () => {
 		console.log("hola");
-		console.log(props.primaryArtist);
+		console.log(props.pathTrack);
 	};
 
 	return (
