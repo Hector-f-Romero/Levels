@@ -6,6 +6,8 @@ import { AppDataSource } from "../config/mysql";
 const trackRepository = AppDataSource.getRepository(Track);
 const artistRepository = AppDataSource.getRepository(Artist);
 
+const storageLocationURL = `${process.env.FILES_STORAGE_URI}/api/uploads`;
+
 const getLastTracks = (req: Request, res: Response) => {
 	res.status(200).json({ msg: "Últimas 10 canciones" });
 };
@@ -29,7 +31,6 @@ const createTrack = async (req: Request, res: Response) => {
 		const { trackData, featurings } = req.body;
 		const { duration, idAlbum, idGenre, idPrimaryArtist, releaseDate, titleTrack } = trackData;
 
-		// const track = trackRepository.create(trackData);
 		const track = trackRepository.create({ duration, idAlbum, idGenre, idPrimaryArtist, releaseDate, titleTrack });
 
 		if (featurings.length > 0) {
@@ -42,8 +43,9 @@ const createTrack = async (req: Request, res: Response) => {
 		}
 
 		await trackRepository.save(track);
-		console.log(track);
-		res.status(201).json({ msg: "ok" });
+		track.pathTrack = `${storageLocationURL}/tracks/${track.idTrack}`;
+		await trackRepository.save(track);
+		res.status(201).json(track);
 	} catch (error) {
 		handleHttp(res, error, "ERROR_CREATE_GENRE (POST)");
 	}

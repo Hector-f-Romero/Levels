@@ -25,10 +25,10 @@ export class Track extends BaseEntity {
 	@Column("int")
 	duration: number;
 
-	@Column("varchar", { length: 25, nullable: true })
+	@Column("varchar", { length: 90, nullable: true })
 	pathTrack: string;
 
-	@Column("varchar", { length: 25, nullable: true })
+	@Column("varchar", { length: 90, nullable: true })
 	coverTrack: string;
 
 	@Column("smallint")

@@ -32,12 +32,18 @@ const getTrackFile = async (req: Request, res: Response) => {
 			res.status(404).json({ msg: `Not exists audio file for ${track.titleTrack}.` });
 		}
 	} catch (error) {
-		handleHttp(res, error, "ERROR_UPLOAD_IMAGE (POST)");
+		handleHttp(res, error, "ERROR_GET_TRACK (GET)");
 	}
 };
 
 const uploadTrackFile = async (req: Request, res: Response) => {
 	try {
+		console.log(req.file);
+		if (!req.file) {
+			res.status(400).json({ error: "Not exists file in the request." });
+			return;
+		}
+
 		const { id } = req.params;
 		const track = await trackRepository.findOneBy({ idTrack: Number(id) });
 
@@ -46,17 +52,12 @@ const uploadTrackFile = async (req: Request, res: Response) => {
 			return;
 		}
 
-		if (!req.file) {
-			res.status(400).json({ error: "Not exists file in the request." });
-			return;
-		}
-
-		const storagePath = path.join(__dirname, `../uploads/tracks/${id}.jpg`);
+		const storagePath = path.join(__dirname, `../uploads/tracks/${id}.mp3`);
 		track.pathTrack = `${storageLocationURL}/tracks/${req.params.id}`;
 		await trackRepository.save(track);
 		res.status(200).sendFile(storagePath);
 	} catch (error) {
-		handleHttp(res, error, "ERROR_UPLOAD_IMAGE (POST)");
+		handleHttp(res, error, "ERROR_UPLOAD_TRACK (POST)");
 	}
 };
 

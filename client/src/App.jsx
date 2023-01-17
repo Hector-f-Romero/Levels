@@ -17,6 +17,7 @@ import CreateGenre from "./pages/admin/CreateGenre";
 import CreateTrack from "./pages/admin/CreateTrack";
 import CreateFeaturings from "./pages/admin/CreateFeaturings";
 import AlbumInfo from "./pages/AlbumInfo";
+import MusicPlayer from "./components/MusicPlayer";
 
 const App = () => {
 	return (
@@ -37,6 +38,7 @@ const App = () => {
 						<Route path="/login" element={<LogIn />} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>
+					<MusicPlayer></MusicPlayer>
 				</BrowserRouter>
 			</DataProvider>
 		</UserProvider>

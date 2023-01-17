@@ -36,7 +36,7 @@ const createAlbumRequest = async (data) => {
 		console.log(data);
 		const { albumCover, ownedBy, ...dataAlbum } = data;
 		const resAlbum = await instance.post("/", dataAlbum);
-
+		console.log(albumCover);
 		const { idAlbum } = resAlbum.data;
 		const formData = new FormData();
 		formData.append("albumCover", data.albumCover[0]);

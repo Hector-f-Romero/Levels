@@ -70,7 +70,7 @@ const CreateFeaturings = () => {
 			idFeaturings = featuringList.map((ft) => ft.value);
 		}
 
-		const res = await createTrackRequest({ trackData, featurings: idFeaturings });
+		const res = await createTrackRequest({ trackData, featurings: idFeaturings, pathTrack: data.pathTrack });
 		console.log(res);
 		// reset();
 		Swal.fire({
@@ -89,9 +89,20 @@ const CreateFeaturings = () => {
 	}
 
 	const inputs = [
-		{ id: 1, name: "existsFeaturings", label: "Exits featurings?", type: "checkbox" },
 		{
-			id: 2,
+			id: 1,
+			name: "pathTrack",
+			label: "Audio track",
+			type: "file",
+			accept: "audio/*",
+			multiple: false,
+			validationProps: {
+				required: "Duration cannot be empty.",
+			},
+		},
+		{ id: 2, name: "existsFeaturings", label: "Exits featurings?", type: "checkbox" },
+		{
+			id: 3,
 			name: `idFeaturingArtist`,
 			label: `Featuring artist`,
 			type: "select",

@@ -55,7 +55,6 @@ const CreateTrack = () => {
 		}
 
 		data.duration = transformDuration(data.duration);
-		console.log(data);
 		reset();
 		navigate("/create/track/featurings", { state: { data } });
 	};
@@ -146,17 +145,6 @@ const CreateTrack = () => {
 			options: artists,
 			validationProps: {},
 		},
-		// {
-		// 	id: 7,
-		// 	name: "pathTrack",
-		// 	label: "Audio track",
-		// 	type: "file",
-		// 	placeholder: "4:58",
-		// 	pattern: "/^d+:d{2}$/gm",
-		// 	validationProps: {
-		// 		required: "Duration cannot be empty.",
-		// 	},
-		// },
 		// {
 		// 	id: 8,
 		// 	name: "coverTrack",

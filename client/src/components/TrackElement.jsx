@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
+
+import { DataContext } from "../context/dataContext";
 import { transformDurationToMinutes } from "../helpers/normalize-data";
 
 const TrackElement = (props) => {
 	const { duration, idTrack, pathTrack, releaseDate, titleTrack, artists } = props.data;
+	const { track, setTrack } = useContext(DataContext);
 	const durationInMinutes = transformDurationToMinutes(duration);
 
 	const handlePlayTrack = () => {
-		console.log("hola");
-		console.log(props.pathTrack);
+		setTrack(props.data);
 	};
 
 	return (

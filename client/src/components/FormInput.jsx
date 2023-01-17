@@ -83,6 +83,7 @@ const FormInput = ({ register, errors, settings, watchFields, watch, resetField,
 					multiple={settings.multiple}
 					accept={settings.accept}
 					className="form-input"
+					required={true}
 					// className="my-input-file"
 					{...register(name, {
 						onChange: (e) => {

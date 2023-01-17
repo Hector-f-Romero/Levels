@@ -33,7 +33,6 @@ const CreateAlbum = () => {
 
 	const loadData = async () => {
 		const resArtists = await getArtistsRequest();
-		console.log(resArtists);
 		setArtists(normalizeSelectValues(resArtists));
 		reset();
 		setLoading(false);
