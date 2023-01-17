@@ -239,6 +239,10 @@ header {
 	padding-left: 2em;
 }
 
+.card-data-info h1 {
+	text-align: left;
+}
+
 .track-list {
 	margin-top: 1em;
 	padding: 1em 0;
@@ -287,15 +291,141 @@ header {
 .music-player-container {
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
 	position: sticky;
 	bottom: 0;
 	width: 100%;
 	height: 80px;
-	background-color: rgb(84, 25, 25);
+	background-color: #181818;
+}
+
+.music-player-track-info {
+	flex-grow: 1;
+	flex: 1 5 40%;
+}
+
+.player-controller-container {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	flex: 4 1 60%;
+}
+
+.player-controller {
+}
+
+.progress-bar-container {
+	width: 90%;
+	display: flex;
+	align-items: center;
+	column-gap: 1em;
 }
 
 .play-button {
 	font-size: 2rem;
 	align-items: center;
+}
+
+.progress-bar {
+	--bar-bg: #5e5e5e;
+	--seek-before-width: 100px;
+	--seek-before-color: #fff;
+	--knobby: rgb(110, 181, 126);
+	--selectedKnobby: rgb(48, 253, 184);
+	background-color: var(--bar-bg);
+	appearance: none;
+	border-radius: 10px;
+	position: relative;
+	width: 100%;
+	height: 11px;
+	outline: none;
+}
+
+/* Progress bar in safari*/
+.progress-bar::-webkit-slider-runnable-track {
+	background-color: var(--bar-bg);
+	appearance: none;
+	border-radius: 10px;
+	position: relative;
+	width: 100%;
+	height: 11px;
+	outline: none;
+}
+
+/* Progress bar in firefox*/
+.progress-bar::-moz-range-track {
+	background-color: var(--bar-bg);
+	appearance: none;
+	border-radius: 10px;
+	position: relative;
+	width: 100%;
+	height: 11px;
+	outline: none;
+}
+
+.progress-bar::-moz-focus-outer {
+	border: 0;
+}
+
+/* Progress bar - chrome and safari*/
+.progress-bar::before {
+	content: "";
+	height: 11px;
+	width: var(--seek-before-width);
+	background-color: var(--seek-before-color);
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
+	cursor: pointer;
+}
+
+/* Progress bar in firefox*/
+.progress-bar::-moz-range-progress {
+	background-color: var(--seek-before-color);
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	height: 11px;
+}
+
+/* knobby - chrome and safari */
+.progress-bar::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	height: 15px;
+	width: 15px;
+	border-radius: 50%;
+	border: none;
+	background-color: var(--knobby);
+	cursor: pointer;
+	position: relative;
+	margin: -2px 0 0 0;
+	z-index: 3;
+	box-sizing: border-box;
+}
+
+/* knobby while dragging - chrome and safari */
+.progress-bar:active::-webkit-slider-thumb {
+	transform: scale(1.2);
+	background-color: var(--selectedKnobby);
+}
+
+/* knobby - firefox */
+.progress-bar::-moz-range-thumb {
+	height: 15px;
+	width: 15px;
+	border-radius: 50%;
+	border: transparent;
+	background-color: var(--knobby);
+	cursor: pointer;
+	position: relative;
+	z-index: 3;
+	box-sizing: border-box;
+}
+
+/* knobby while dragging - firefox */
+.progress-bar:active::-moz-range-thumb {
+	transform: scale(1.2);
+	background-color: var(--selectedKnobby);
 }

@@ -24,8 +24,8 @@ const TrackElement = (props) => {
 					<span key={art.idArtist}>, {art.stageName}</span>
 				))}
 			</div>
-			<h2>{releaseDate}</h2>
-			<h2>{durationInMinutes}</h2>
+			<h3>{releaseDate}</h3>
+			<h3>{durationInMinutes}</h3>
 		</div>
 	);
 };
